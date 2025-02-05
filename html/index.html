@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questify - Gamified Habit Tracker</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 
@@ -106,21 +107,71 @@
             <button id="add-btn">+ Add Task</button>
         </section>
 
-        <!-- Task Sections -->
-        <section id="tasks">
-            <div class="task-column" id="habits">
+        <section id="task-sections">
+            <!-- Habits Section -->
+            <div class="task-container" id="habits">
                 <h3>Habits</h3>
-                <ul id="habit-list"></ul>
+                <nav class="filter-tabs">
+                    <a href="#" class="active">All</a>
+                    <a href="#">Weak</a>
+                    <a href="#">Strong</a>
+                </nav>
+                <div class="task-list">
+                    <div class="task-card">
+                        <button class="habit-btn habit-plus"><i class="fa-solid fa-plus"></i></button>
+                        <p>Drink 2L of Water</p>
+                        <button class="habit-btn habit-minus"><i class="fa-solid fa-minus"></i></button>
+                    </div>
+                    
+                    <div class="task-card">
+                        <button class="habit-btn habit-plus"><i class="fa-solid fa-plus"></i></button>
+                        <p>Read for 30 Minutes</p>
+                        <button class="habit-btn habit-minus"><i class="fa-solid fa-minus"></i></button>
+                    </div>                    
+                </div>
             </div>
-            <div class="task-column" id="dailies">
+        
+            <!-- Dailies Section -->
+            <div class="task-container" id="dailies">
                 <h3>Dailies</h3>
-                <ul id="daily-list"></ul>
+                <nav class="filter-tabs">
+                    <a href="#" class="active">All</a>
+                    <a href="#">Due</a>
+                    <a href="#">Not Due</a>
+                </nav>
+                <div class="task-list">
+                    <div class="task-card">
+                        <span class="daily-icon">📅</span>
+                        <p>Complete Morning Exercise</p>
+                    </div>
+                    <div class="task-card">
+                        <span class="daily-icon">📅</span>
+                        <p>Review Study Notes</p>
+                    </div>
+                </div>
             </div>
-            <div class="task-column" id="todos">
-                <h3>To-Do</h3>
-                <ul id="todo-list"></ul>
+        
+            <!-- To-Do Section -->
+            <div class="task-container" id="todos">
+                <h3>To-Do’s <span class="todo-count">2</span></h3>
+                <nav class="filter-tabs">
+                    <a href="#" class="active">Active</a>
+                    <a href="#">Scheduled</a>
+                    <a href="#">Complete</a>
+                </nav>
+                <div class="task-list">
+                    <div class="task-card">
+                        <span class="todo-icon">🟪</span>
+                        <p>Submit Project Report</p>
+                    </div>
+                    <div class="task-card">
+                        <span class="todo-icon">🟪</span>
+                        <p>Buy Groceries</p>
+                    </div>
+                </div>
             </div>
         </section>
+        
 
     </div> <!-- Closing Main Container -->
 

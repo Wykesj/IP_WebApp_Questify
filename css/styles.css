@@ -639,12 +639,14 @@ body {
 /* ============================= */
 /* SEARCH & CONTROLS */
 /* ============================= */
+
 #controls {
     display: flex;
     gap: 10px;
     margin: 20px 0;
 }
 
+/* Search Bar */
 #search-bar {
     flex-grow: 1;
     padding: 10px;
@@ -652,41 +654,209 @@ body {
     border-radius: 5px;
 }
 
+/* Buttons */
 #filter-btn, #add-btn {
-    padding: 10px;
-    background: #1e1e1e;
+    padding: 10px 15px;
+    background: #007BFF; 
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-#add-btn:hover {
-    background: #ffcc00;
-    color: #1e1e1e;
+/* Hover Effect */
+#filter-btn:hover, #add-btn:hover {
+    transform: scale(1.05); /* Subtle scaling effect */
 }
 
-/* ============================= */
-/* TASK SECTIONS */
-/* ============================= */
-#tasks {
+/* Active/Pressed Effect */
+#filter-btn:active, #add-btn:active {
+    transform: scale(0.95); /* Pressed-in effect */
+}
+
+/* ============================== */
+/* TASK SECTIONS - CONTAINER LAYOUT */
+/* ============================== */
+#task-sections {
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    margin-top: 20px;
 }
 
-.task-column {
-    background: white;
+/* Individual Task Section */
+.task-container {
+    flex: 1;
+    background: #5A40E3; 
     padding: 15px;
-    border-radius: 10px;
-    flex-grow: 1;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
 }
 
-.task-column h3 {
+/* ============================== */
+/* HABITS SECTION */
+/* ============================== */
+
+#habits {
+    min-height: 400px;
+}
+
+/* Section Titles */
+.task-container h3 {
     text-align: center;
     margin-bottom: 10px;
+    color: white; 
+}
+
+/* ============================== */
+/* FILTER BUTTONS */
+/* ============================== */
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.filter-tabs a {
+    text-decoration: none;
+    color: white;
+    background: rgba(255, 255, 255, 0.2); /* Subtle transparent background */
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Active Filter Button */
+.filter-tabs a.active {
+    color: white;
+    background: #007BFF; 
+}
+
+/* ============================== */
+/* TASK LIST & CARDS */
+/* ============================== */
+.task-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Task Cards */
+.task-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    color: #333;
+    font-size: 18px; 
+    min-height: 55px; 
+}
+
+/* Left-align task text */
+.task-card p {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10px;
+}
+
+/* Hover effect for Task Cards */
+.task-card:hover {
+    transform: scale(1.02);
+}
+
+/* ============================== */
+/* PLUS & MINUS BUTTONS */
+/* ============================== */
+
+
+.habit-btn {
+    background: none;
+    border: 2px solid transparent; 
+    cursor: pointer;
+    width: 35px; 
+    height: 35px;
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Remove default button outline */
+.habit-btn:focus,
+.habit-btn:active {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+/* Plus Button (Green) */
+.habit-plus {
+    color: #34C759;
+    border: 2px solid #34C759; /* Green outline */
+}
+
+/* Minus Button (Red) */
+.habit-minus {
+    color: #FF3B3B;
+    border: 2px solid #FF3B3B; /* Red outline */
+}
+
+/* Hover Effects */
+.habit-plus:hover {
+    background: #34C759;
+    color: white;
+}
+
+.habit-minus:hover {
+    background: #FF3B3B;
+    color: white;
+}
+
+/* Click Effect */
+.habit-btn:active {
+    transform: scale(0.9); /* Press-in effect */
+}
+
+/* ============================== */
+/* DAILIES SECTION */
+/* ============================== */
+
+/* Style for Empty State in Dailies */
+.empty-text {
+    text-align: center;
+    color: white; 
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* Dailies Icons */
+.daily-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    color: white;
+}
+
+/* ============================== */
+/* TO-DO SECTION */
+/* ============================== */
+
+.todo-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    color: white;
 }
 
 /* ============================= */
