@@ -6,6 +6,7 @@
     <title>Questify - Gamified Habit Tracker</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
 </head>
 <body>
 
@@ -141,16 +142,16 @@
                 </nav>
                 <div class="task-list">
                     <div class="task-card">
-                        <span class="daily-icon">📅</span>
+                        <div class="checkbox-container" data-task-id="daily1"></div>
                         <p>Complete Morning Exercise</p>
                     </div>
                     <div class="task-card">
-                        <span class="daily-icon">📅</span>
+                        <div class="checkbox-container" data-task-id="daily2"></div>
                         <p>Review Study Notes</p>
                     </div>
                 </div>
             </div>
-        
+
             <!-- To-Do Section -->
             <div class="task-container" id="todos">
                 <h3>To-Do’s <span class="todo-count">2</span></h3>
@@ -161,18 +162,16 @@
                 </nav>
                 <div class="task-list">
                     <div class="task-card">
-                        <span class="todo-icon">🟪</span>
+                        <div class="checkbox-container" data-task-id="todo1"></div>
                         <p>Submit Project Report</p>
                     </div>
                     <div class="task-card">
-                        <span class="todo-icon">🟪</span>
+                        <div class="checkbox-container" data-task-id="todo2"></div>
                         <p>Buy Groceries</p>
                     </div>
                 </div>
             </div>
         </section>
-        
-
     </div> <!-- Closing Main Container -->
 
     <!-- Footer (Outside of Container) -->
@@ -180,6 +179,6 @@
         <p>&copy; 2025 Questify. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="..\javascript\script.js"></script>
 </body>
 </html>

@@ -859,6 +859,37 @@ body {
     color: white;
 }
 
+/* ============================== */
+/* CHECKBOX CONTAINER (LOTTIE) */
+/* ============================== */
+
+.checkbox-container {
+    width: 35px; 
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevents it from expanding the task card */
+}
+
+.task-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    min-height: 60px; /* Ensures all cards are equal */
+}
+
+/* Strike-through text */
+.task-completed {
+    text-decoration: line-through;
+    color: #888; /* Optional: change text color to indicate completion */
+}
+
 /* ============================= */
 /* FOOTER */
 /* ============================= */
