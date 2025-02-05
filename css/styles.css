@@ -355,24 +355,10 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* === Debugging: Add Red Borders to All Containers === */
-#container,
-#logo,
-#navbar,
-#nav-links,
-#dashboard,
-#sidebar,
-#streak-indicator,
-#character-picture,
-#status-screen,
-#xp-bar,
-#stats,
-#controls,
-#tasks,
-.task-column,
-#footer {
-    /*border: 2px solid red !important; /* Red border for visualization */
-}
+
+
+
+
 
 /* ============================= */
 /* GLOBAL STYLES & RESET */
