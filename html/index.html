@@ -4,82 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questify - Gamified Habit Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav id="navbar">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="inventory.html">Inventory</a></li>
-            <li><a href="quests.html">Quests</a></li>
-            <li><a href="leaderboard.html">Leaderboard</a></li>
-            <li><a href="achievements.html">Achievements</a></li>
-            <li><a href="profile.html">Profile/Settings</a></li>
-        </ul>
-    </nav>
+    <div class="container">  <!-- Main Container -->
 
-    <!-- Main Dashboard -->
-    <main id="dashboard">
+        <!-- Top Bar (Logo + Navigation) -->
+        <div id="top-bar">
+            <div id="logo">
+                <img src="../assets/logo/QuestifyLogoBLACK.svg" alt="Questify Logo">
+            </div>
 
-        <!-- Sidebar (Left) -->
-        <aside id="sidebar">
-            <div id="streak-indicator">
-                <p>🔥 Streak: <span id="streak-count">0</span> Days</p>
-            </div>
-            <div id="character-picture">
-                <img src="character.png" alt="Character Avatar">
-            </div>
-        </aside>
+            <nav id="navbar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="inventory.html">Inventory</a></li>
+                    <li><a href="quests.html">Quests</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
+                    <li><a href="achievements.html">Achievements</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+        </div>
 
-        <!-- Status Screen (Middle) -->
-        <section id="status-screen">
-            <div id="user-info">
-                <h2 id="username">Username</h2>
-                <p>Level <span id="user-level">1</span></p>
+        <!-- Main Dashboard -->
+        <main id="dashboard">
+
+            <!-- Sidebar (Left) -->
+            <aside id="sidebar">
+                <div id="streak-indicator">
+                    <p>🔥 Streak: <span id="streak-count">0</span> Days</p>
+                </div>
+                <div id="character-picture">
+                    <img src="character.png" alt="Character Avatar">
+                </div>
+            </aside>
+
+            <!-- Status Screen (Middle) -->
+            <section id="status-screen">
+                <div id="user-info">
+                    <h2 id="username">Username</h2>
+                    <p>Level <span id="user-level">1</span></p>
+                </div>
+                <div id="xp-bar">
+                    <div id="xp-progress" style="width: 50%;">XP: 500/1000</div>
+                </div>
+                <div class="stats">
+                    <div class="stat" id="strength">💪 Strength: <span>10</span></div>
+                    <div class="stat" id="vitality">❤️ Vitality: <span>8</span></div>
+                    <div class="stat" id="intelligence">🧠 Intelligence: <span>12</span></div>
+                    <div class="stat" id="agility">⚡ Agility: <span>7</span></div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Search Bar and Controls -->
+        <section id="controls">
+            <input type="text" id="search-bar" placeholder="Search tasks...">
+            <button id="filter-btn">Filter</button>
+            <button id="add-btn">+ Add Task</button>
+        </section>
+
+        <!-- Task Sections -->
+        <section id="tasks">
+            <div class="task-column" id="habits">
+                <h3>Habits</h3>
+                <ul id="habit-list"></ul>
             </div>
-            <div id="xp-bar">
-                <div id="xp-progress" style="width: 50%;">XP: 500/1000</div>
+            <div class="task-column" id="dailies">
+                <h3>Dailies</h3>
+                <ul id="daily-list"></ul>
             </div>
-            <div class="stats">
-                <div class="stat" id="strength">💪 Strength: <span>10</span></div>
-                <div class="stat" id="vitality">❤️ Vitality: <span>8</span></div>
-                <div class="stat" id="intelligence">🧠 Intelligence: <span>12</span></div>
-                <div class="stat" id="agility">⚡ Agility: <span>7</span></div>
+            <div class="task-column" id="todos">
+                <h3>To-Do</h3>
+                <ul id="todo-list"></ul>
             </div>
         </section>
 
-    </main>
+    </div> <!-- Closing Main Container -->
 
-    <!-- Search Bar and Controls -->
-    <section id="controls">
-        <input type="text" id="search-bar" placeholder="Search tasks...">
-        <button id="filter-btn">Filter</button>
-        <button id="add-btn">+ Add Task</button>
-    </section>
-
-    <!-- Task Sections -->
-    <section id="tasks">
-        <div class="task-column" id="habits">
-            <h3>Habits</h3>
-            <ul id="habit-list"></ul>
-        </div>
-        <div class="task-column" id="dailies">
-            <h3>Dailies</h3>
-            <ul id="daily-list"></ul>
-        </div>
-        <div class="task-column" id="todos">
-            <h3>To-Do</h3>
-            <ul id="todo-list"></ul>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- Footer (Outside of Container) -->
     <footer id="footer">
         <p>&copy; 2025 Questify. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script> <!-- Link to external JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
