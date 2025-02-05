@@ -463,14 +463,28 @@ body {
     gap: 20px;
 }
 
+/* STREAK INDICATOR CONTAINER */
 #streak-indicator {
-    background: #FFD700;
-    padding: 15px;
+    background: #FFD700; /* Gold background */
+    padding: 10px;
     text-align: center;
-    font-size: 18px;
-    font-weight: bold;
     border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+/* FULL STREAK TEXT INCLUDING FIRE EMOJI */
+#streak-text {
+    color: #000000; 
+    font-size: 20px; 
+    font-weight: 700; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+
 
 #character-picture img {
     width: 100%;
@@ -482,9 +496,9 @@ body {
 /* ============= */
 
 
-/* STATUS SCREEN (More Balanced Spacing) */
+/* STATUS SCREEN */
 #status-screen {
-    background: #007BFF;
+    background: #0056B3;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -504,7 +518,7 @@ body {
 /* USERNAME */
 #user-info h2 {
     font-size: 24px; 
-    font-weight: 1000; /* Bolder for stronger presence */
+    font-weight: 1000; 
     color: white; 
     margin-bottom: 5px;
 }
@@ -516,52 +530,111 @@ body {
     color: #FFD700; 
 }
 
-/* XP BAR CONTAINER */
-#xp-bar {
-    background: #ddd;
-    border-radius: 10px;
-    width: 100%;
-    height: 20px; 
-    overflow: hidden;
-    margin-bottom: 25px; /* spacing between XP bar and stats */
-}
+/* XP CONTAINER */
 
-/* XP PROGRESS FILL */
-#xp-progress {
-    background: #4caf50;
-    width: 50%;
-    height: 100%;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    line-height: 20px; 
-    border-radius: 10px;
-}
-
-/* PLAYER STATS CONTAINER */
-.stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px 25px; /* stat block spacing */
-    width: 100%;
-}
-
-/* STAT BLOCKS */
-.stat {
-    background: #f4f4f4;
-    padding: 14px;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 8px;
-    width: 100%;
+#xp-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-size: 17px;
-    height: 48px;
+    justify-content: center; 
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 20px; 
 }
 
+/* XP LABEL & VALUE */
+#xp-label, #xp-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* XP BAR */
+#xp-bar {
+    position: relative;
+    flex-grow: 1;
+    width: 90%;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #003f7f;
+    display: flex;
+}
+
+/* XP BAR UNFILLED */
+#xp-unfilled {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #003f7f; 
+    border-radius: 10px;
+}
+
+/* XP BAR FILLED */
+#xp-filled {
+    position: absolute;
+    height: 100%;
+    background: #34D058;
+    border-radius: 10px;
+}
+
+
+/* STATS CONTAINER */
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Space between stat bars */
+    width: 100%;
+}
+
+/* INDIVIDUAL STAT ROW */
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+/* STAT NAME */
+.stat-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    min-width: 120px; /* Ensures alignment */
+    text-align: left;
+}
+
+/* STAT BAR CONTAINER */
+.stat-bar {
+    background: #003f7f; 
+    width: 100%;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* STAT PROGRESS */
+.stat-fill {
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+/* STAT VALUE */
+.stat-value {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    min-width: 30px;
+    text-align: right;
+    margin-right: 10px; 
+}
+
+/* INDIVIDUAL STAT COLORS */
+#strength-bar .stat-fill { background: #f2c243; }   
+#vitality-bar .stat-fill { background: #f9312e; }   
+#intelligence-bar .stat-fill { background: #fe63be; } 
+#agility-bar .stat-fill { background: #de7d3f; }   
 
 /* ============================= */
 /* SEARCH & CONTROLS */

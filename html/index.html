@@ -34,7 +34,7 @@
             <!-- Sidebar (Left) -->
             <aside id="sidebar">
                 <div id="streak-indicator">
-                    <p>🔥 Streak: <span id="streak-count">3</span> Days</p>
+                    <p id="streak-text">🔥Streak: <span id="streak-count">3</span> Days</p>
                 </div>
                 <div id="character-picture">
                     <img src="../assets\images\aigenpfp.webp" alt="Character Avatar">
@@ -47,15 +47,54 @@
                     <h2 id="username">Nick Valor</h2>
                     <p>Level <span id="user-level">7</span></p>
                 </div>
-                <div id="xp-bar">
-                    <div id="xp-progress" style="width: 50%;">XP: 500/1000</div>
+                <div id="xp-container">
+                    <span id="xp-label">XP</span>
+                    <div id="xp-bar">
+                        <div id="xp-unfilled"></div>
+                        <div id="xp-filled" style="width: 50%;"></div>
+                    </div>
+                    <span id="xp-value">500/1000</span>
                 </div>
                 <div class="stats">
-                    <div class="stat" id="strength">💪 Strength: <span>10</span></div>
-                    <div class="stat" id="vitality">❤️ Vitality: <span>8</span></div>
-                    <div class="stat" id="intelligence">🧠 Intelligence: <span>12</span></div>
-                    <div class="stat" id="agility">⚡ Agility: <span>7</span></div>
+
+                    <!-- Strength -->
+                    <div class="stat" id="strength-bar">
+                        <span class="stat-name">💪 Strength</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 47%;"></div>
+                        </div>
+                        <span class="stat-value">47</span>
+                    </div>
+                
+                    <!-- Vitality -->
+                    <div class="stat" id="vitality-bar">
+                        <span class="stat-name">❤️ Vitality</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 12%;"></div>
+                        </div>
+                        <span class="stat-value">12</span>
+                    </div>
+                
+                    <!-- Intelligence -->
+                    <div class="stat" id="intelligence-bar">
+                        <span class="stat-name">🧠 Intelligence</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 35%;"></div>
+                        </div>
+                        <span class="stat-value">35</span>
+                    </div>
+                
+                    <!-- Agility -->
+                    <div class="stat" id="agility-bar">
+                        <span class="stat-name">⚡ Agility</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 22%;"></div>
+                        </div>
+                        <span class="stat-value">22</span>
+                    </div>
+                
                 </div>
+                
             </section>
 
         </main>
