@@ -1,3 +1,7 @@
+// Lottie animation for checkbox and Strike-through text
+// Lottie animation for checkbox and Strike-through text
+// Lottie animation for checkbox and Strike-through text
+
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".checkbox-container").forEach((container) => {
         // Ensure the container and its parent hide overflow
@@ -31,6 +35,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.parentElement.querySelector("p").classList.remove("task-completed"); // Remove strike-through from text
             }
             isChecked = !isChecked; // Toggle state
+        });
+    });
+});
+
+
+// Search functionality
+// Search functionality
+// Search functionality
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-bar");
+    const taskCards = document.querySelectorAll(".task-card");
+
+    searchInput.addEventListener("input", function () {
+        let query = searchInput.value.toLowerCase();
+
+        taskCards.forEach(card => {
+            let taskText = card.querySelector("p").textContent.toLowerCase();
+            if (taskText.includes(query)) {
+                card.style.display = "flex"; // Show matching task
+            } else {
+                card.style.display = "none"; // Hide non-matching tasks
+            }
         });
     });
 });

@@ -636,9 +636,12 @@ body {
 #search-bar {
     flex-grow: 1;
     padding: 10px;
-    border: 2px solid #ddd;
+    border: 2px solid #bbb;
     border-radius: 5px;
+    outline: none;
+    transition: 0.3s ease;
 }
+
 
 /* Buttons */
 #filter-btn, #add-btn {
