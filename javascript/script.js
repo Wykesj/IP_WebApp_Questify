@@ -121,6 +121,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("create-daily").addEventListener("click", () => handleTaskSubmission("daily"));
     document.getElementById("create-todo").addEventListener("click", () => handleTaskSubmission("todo"));
 
+
+    // Add closeModal function here
+    function closeModal(type) {
+        const modal = document.getElementById(`${type}-modal`);
+        if (modal) {
+            modal.style.display = "none"; // Hide modal instantly
+        }
+    }
+
+
     // ✅ Handle Task Submission
     async function handleTaskSubmission(type) {
         const titleInput = document.getElementById(`${type}-title`).value.trim();
@@ -158,11 +168,40 @@ document.addEventListener("DOMContentLoaded", async function () {
         const success = await saveTask(newTask);
         
         if (success) {
-            alert(`${type.charAt(0).toUpperCase() + type.slice(1)} task added successfully!`);
-            window.location.reload(); // Refresh to see new data
+            closeModal(type);
+            playSuccessAnimation();
         }
     }
 
+    // ✅ Success Animation
+    function playSuccessAnimation() {
+        const animationContainer = document.getElementById("success-animation-container");
+        const overlay = document.getElementById("success-overlay");
+    
+        // Show the overlay and animation
+        overlay.style.display = "block";
+        animationContainer.style.display = "block";
+    
+        // Load the Lottie animation
+        let animation = lottie.loadAnimation({
+            container: document.getElementById("success-animation"),
+            renderer: "svg",
+            loop: false,
+            autoplay: true,
+            path: "../assets/lotties/success.json",
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid meet"
+            }
+        });
+    
+        // Hide animation and overlay after 2 seconds
+        setTimeout(() => {
+            animationContainer.style.display = "none";
+            overlay.style.display = "none";
+            window.location.reload(); // Refresh to see new task
+        }, 2000);
+    }
+    
 
     // ✅ Save Task to Supabase
     async function saveTask(taskData) {
