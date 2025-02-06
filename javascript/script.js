@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    // ✅ Initialize Supabase using the CDN method
+    // ✅ Initialize Supabase
     const SUPABASE_URL = "https://ficxsnnbjzskugtblrfw.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpY3hzbm5ianpza3VndGJscmZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MTIzODksImV4cCI6MjA1NDM4ODM4OX0.BcwzBOYhxIj-kbpnpRGp-1Ekf4tjpiFoVfKOujbhFfM";
     
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     try {
-        const { data, error } = await supabaseClient.from("tasks").select("*").limit(1); // Example test query
+        const { data, error } = await supabaseClient.from("tasks").select("*").limit(1); 
         if (error) throw error;
         console.log("✅ Supabase connected successfully:", data);
     } catch (err) {
@@ -115,4 +115,74 @@ document.addEventListener("DOMContentLoaded", async function () {
     setupModal("habit", "habit-modal", "close-habit-modal", "cancel-habit", "habit-title", "create-habit");
     setupModal("daily", "daily-modal", "close-daily-modal", "cancel-daily", "daily-title", "create-daily");
     setupModal("todo", "todo-modal", "close-todo-modal", "cancel-todo", "todo-title", "create-todo");
+
+    // ✅ Add Event Listeners for Task Creation
+    document.getElementById("create-habit").addEventListener("click", () => handleTaskSubmission("habit"));
+    document.getElementById("create-daily").addEventListener("click", () => handleTaskSubmission("daily"));
+    document.getElementById("create-todo").addEventListener("click", () => handleTaskSubmission("todo"));
+
+    // ✅ Handle Task Submission
+    async function handleTaskSubmission(type) {
+        const titleInput = document.getElementById(`${type}-title`).value.trim();
+        
+        // ✅ Fix: Ensure dropdown values are retrieved
+        const notesInput = document.getElementById(`${type}-notes`)?.value.trim() || null;
+        
+        const difficultyElement = document.getElementById(`${type}-difficulty`);
+        const difficultyInput = difficultyElement ? difficultyElement.value : "easy"; 
+
+        const strengthElement = document.getElementById(`${type}-strength`);
+        const strengthInput = strengthElement ? strengthElement.value : "weak"; 
+
+        // ✅ Fix: Ensure filters get a single value from dropdown (not checkboxes)
+        const filtersElement = document.getElementById(`${type}-filters`);
+        const filtersInput = filtersElement ? filtersElement.value : null;
+
+        if (!titleInput) {
+            alert("Please enter a task title.");
+            return;
+        }
+
+        // ✅ Ensure all fields are included in the task object
+        const newTask = {
+            title: titleInput,
+            notes: notesInput,
+            type: type,
+            difficulty: difficultyInput,
+            strength: strengthInput,
+            filters: filtersInput, // Ensure it's a string (since it's a dropdown, not a multi-select)
+            created_at: new Date().toISOString()
+        };
+
+        console.log("📤 Sending task to Supabase:", newTask); // Debugging output
+        const success = await saveTask(newTask);
+        
+        if (success) {
+            alert(`${type.charAt(0).toUpperCase() + type.slice(1)} task added successfully!`);
+            window.location.reload(); // Refresh to see new data
+        }
+    }
+
+
+    // ✅ Save Task to Supabase
+    async function saveTask(taskData) {
+        try {
+            console.log("📤 Attempting to insert task into Supabase:", taskData); // Debugging log
+    
+            const { data, error } = await supabaseClient.from("tasks").insert([taskData]);
+    
+            if (error) {
+                console.error("❌ Supabase Error:", error);
+                alert("Failed to add task: " + error.message);
+                return false;
+            }
+    
+            console.log("✅ Task successfully added:", data);
+            return true;
+        } catch (err) {
+            console.error("❌ Unexpected error:", err);
+            alert("An unexpected error occurred.");
+            return false;
+        }
+    }    
 });
