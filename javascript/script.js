@@ -620,7 +620,27 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-
+    function setupTaskSubmissionListeners() {
+        document.querySelectorAll(".create-btn").forEach(createBtn => {
+            // ✅ Clone button to remove existing event listeners
+            let newCreateBtn = createBtn.cloneNode(true);
+            createBtn.replaceWith(newCreateBtn);
+    
+            // ✅ Attach a fresh event listener to prevent duplicate calls
+            newCreateBtn.addEventListener("click", function () {
+                const type = this.id.replace("create-", "");
+    
+                console.log(`🛠 Handling task submission for: ${type}`);
+    
+                // ✅ Call the function to create a new task
+                handleTaskSubmission(type);
+            });
+        });
+    }
+    
+    // ✅ Call this function once on page load to attach listeners
+    setupTaskSubmissionListeners();
+    
 
     // ✅ Success Animation
     function playSuccessAnimation() {
