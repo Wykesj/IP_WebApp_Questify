@@ -81,3 +81,38 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+
+// Add Task Dropdown
+// Add Task Dropdown    
+// Add Task Dropdown
+
+document.addEventListener("DOMContentLoaded", function () {
+    const addTaskContainer = document.getElementById("add-task-container");
+    const addTaskBtn = document.getElementById("add-btn");
+    const addTaskDropdown = document.getElementById("add-task-dropdown");
+
+    // Toggle dropdown on click
+    addTaskBtn.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevents immediate closing
+        addTaskContainer.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!addTaskContainer.contains(event.target)) {
+            addTaskContainer.classList.remove("active");
+        }
+    });
+
+    // Placeholder: Handle Task Type Click (Will Later Open Respective Modal)
+    document.querySelectorAll(".dropdown-item").forEach(item => {
+        item.addEventListener("click", function () {
+            const taskType = this.getAttribute("data-type");
+            console.log(`Clicked: ${taskType}`); // Replace with modal logic later
+            addTaskContainer.classList.remove("active"); // Close dropdown
+        });
+    });
+});
