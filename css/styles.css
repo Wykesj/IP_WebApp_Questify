@@ -635,22 +635,105 @@ body {
 /* Search Bar */
 #search-bar {
     flex-grow: 1;
-    padding: 10px;
+    height: 40px; 
+    padding: 0 15px; /* Adjust padding for consistent spacing */
     border: 2px solid #bbb;
     border-radius: 5px;
     outline: none;
     transition: 0.3s ease;
+    font-size: 16px;
+    font-weight: bold; 
 }
 
-
 /* Buttons */
-#filter-btn, #add-btn {
-    padding: 10px 15px;
+#add-btn, #filter-btn {
+    height: 40px; 
+    padding: 0 15px; /* Adjust padding for consistent spacing */
     background: #007BFF; 
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 16px; 
+    font-weight: bold; 
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#add-btn:hover, #filter-btn:hover {
+    transform: scale(1.05); /* Subtle scaling effect */
+}
+
+#add-btn:active, #filter-btn:active {
+    transform: scale(0.95); /* Pressed-in effect */
+}
+
+/* ============================= */
+/* FILTER DROPDOWN STYLES */
+/* ============================= */
+
+#filter-dropdown-container {
+    position: relative;
+    display: inline-block; /* Ensures it aligns with buttons */
+}
+
+#filter-dropdown {
+    position: absolute;
+    top: calc(100% + 10px); /* Position the dropdown directly below the button with some spacing */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    min-width: 250px;
+    display: none; /* Hidden by default */
+    z-index: 1000;
+}
+
+#filter-dropdown-container.active #filter-dropdown {
+    display: block; /* Show dropdown when active */
+}
+
+#filter-dropdown h4 {
+    margin: 0 0 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#filter-dropdown label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#filter-dropdown input[type="checkbox"] {
+    accent-color: #007BFF; 
+}
+
+#reset-filters {
+    width: 100%;
+    padding: 5px;
+    margin-top: 15px;
+    background: #FF4C4C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#reset-filters:hover {
+    background: #D63333;
+}
+
+/* ============================== */
+/* BUTTON HOVER AND ACTIVE EFFECTS */
+/* ============================== */
+
+#filter-btn, #add-btn {
     font-weight: bold;
     transition: background 0.3s ease, transform 0.2s ease;
 }

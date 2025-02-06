@@ -61,3 +61,23 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+// Filter dropdown Button
+// Filter dropdown Button
+// Filter dropdown Button
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filterBtn = document.getElementById("filter-btn");
+    const filterDropdownContainer = document.getElementById("filter-dropdown-container");
+
+    filterBtn.addEventListener("click", function () {
+        filterDropdownContainer.classList.toggle("active"); // Show/hide dropdown
+    });
+
+    // Optional: Hide dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!filterBtn.contains(event.target) && !filterDropdownContainer.contains(event.target)) {
+            filterDropdownContainer.classList.remove("active");
+        }
+    });
+});

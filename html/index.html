@@ -104,7 +104,22 @@
         <!-- Search Bar and Controls -->
         <section id="controls">
             <input type="text" id="search-bar" placeholder="Search tasks...">
-            <button id="filter-btn">Filter</button>
+            
+            <!-- Dropdown Container -->
+            <div id="filter-dropdown-container">
+                <!-- Filter Button -->
+                <button id="filter-btn">Filter</button>
+                
+                <div id="filter-dropdown" class="hidden">
+                    <h4>Filter by Category</h4>
+                    <label><input type="checkbox" value="work"> Work</label>
+                    <label><input type="checkbox" value="school"> School</label>
+                    <label><input type="checkbox" value="exercise"> Exercise</label>
+                    <label><input type="checkbox" value="errands"> Errands</label>
+                    <button id="reset-filters">Reset Filters</button>
+                </div>
+            </div>
+            
             <button id="add-btn">+ Add Task</button>
         </section>
 
