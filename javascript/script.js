@@ -194,3 +194,42 @@ document.addEventListener("DOMContentLoaded", function () {
         createDailyBtn.disabled = dailyTitleInput.value.trim() === "";
     });
 });
+
+
+// Add Todos Modal
+// Add Todos Modal
+// Add Todos Modal
+
+document.addEventListener("DOMContentLoaded", function () {
+    const todoModal = document.getElementById("todo-modal");
+    const openTodoBtn = document.querySelector('[data-type="todo"]'); // Button in dropdown
+    const closeTodoBtn = document.getElementById("close-todo-modal");
+    const cancelTodoBtn = document.getElementById("cancel-todo");
+    const createTodoBtn = document.getElementById("create-todo");
+    const todoTitleInput = document.getElementById("todo-title");
+
+    // Show Modal
+    openTodoBtn.addEventListener("click", function () {
+        todoModal.style.display = "flex";
+    });
+
+    // Hide Modal
+    function closeTodoModal() {
+        todoModal.style.display = "none";
+    }
+
+    closeTodoBtn.addEventListener("click", closeTodoModal);
+    cancelTodoBtn.addEventListener("click", closeTodoModal);
+
+    // Close on outside click
+    window.addEventListener("click", function (e) {
+        if (e.target === todoModal) {
+            closeTodoModal();
+        }
+    });
+
+    // Enable Create Button Only if Title is Filled
+    todoTitleInput.addEventListener("input", function () {
+        createTodoBtn.disabled = todoTitleInput.value.trim() === "";
+    });
+});
