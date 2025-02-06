@@ -120,7 +120,20 @@
                 </div>
             </div>
             
-            <button id="add-btn">+ Add Task</button>
+            <div id="add-task-container">
+                <button id="add-btn">+ Add Task</button>
+                <div id="add-task-dropdown" class="hidden">
+                    <div class="dropdown-item" data-type="habit">
+                        <i class="fa-solid fa-plus-minus"></i> Habit
+                    </div>
+                    <div class="dropdown-item" data-type="daily">
+                        <i class="fa-solid fa-calendar"></i> Daily
+                    </div>
+                    <div class="dropdown-item" data-type="todo">
+                        <i class="fa-solid fa-check-square"></i> To-Do
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="task-sections">
