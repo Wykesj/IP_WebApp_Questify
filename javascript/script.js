@@ -129,14 +129,34 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     
     function attachTaskEditListener(taskCard) {
-        taskCard.addEventListener("click", async function() {
-            const taskId = this.dataset.taskId;
-            const taskType = this.closest(".task-container").id.slice(0, -1);
+        taskCard.addEventListener("click", async function(event) {
+            // Debug logging
+            console.log("🔍 Clicked element:", event.target);
             
-            console.log("📌 Editing Task:", taskId, "Type:", taskType);
+            // Prevent edit modal for checkbox clicks
+            if (event.target.closest('.checkbox-container') || 
+                event.target.closest('.habit-btn')) {
+                console.log("⚠️ Click ignored - checkbox or habit button");
+                return;
+            }
+    
+            const taskId = this.dataset.taskId;
+            const container = this.closest(".task-container");
+            console.log("🔍 Container found:", container);
+            console.log("🔍 Container ID:", container.id);
+    
+            // Fix dailies type detection
+            let taskType = container.id.replace('dailies', 'daily')
+                                     .replace('habits', 'habit')
+                                     .replace('todos', 'todo');
+    
+            console.log("📌 Task type detected:", taskType);
             
             const taskData = await fetchTask(taskId);
-            if (taskData) openEditModal(taskType, taskData);
+            if (taskData) {
+                console.log("📌 Opening modal for:", taskType, taskData);
+                openEditModal(taskType, taskData);
+            }
         });
     }
 
@@ -158,6 +178,24 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
     
+    // Add update task function
+    async function updateTask(taskId, taskData) {
+        try {
+            const { data, error } = await supabaseClient
+                .from("tasks")
+                .update(taskData)
+                .eq("id", taskId)
+                .select();
+
+            if (error) throw error;
+            console.log("✅ Task updated:", data);
+            return data[0];
+        } catch (err) {
+            console.error("❌ Error updating task:", err.message);
+            return null;
+        }
+    }
+
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -171,7 +209,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     
         // Set modal mode and task ID
         modal.setAttribute("data-mode", "edit");
-        modal.setAttribute("data-task-id", task.id); // Using 'id' instead of 'taskId'
+        modal.setAttribute("data-task-id", task.id);
     
         modal.querySelector(".modal-header h2").textContent = `Edit ${capitalizeFirstLetter(type)}`;
     
@@ -181,25 +219,71 @@ document.addEventListener("DOMContentLoaded", async function () {
         const difficultySelect = document.getElementById(`${type}-difficulty`);
         const strengthSelect = document.getElementById(`${type}-strength`);
         const filtersInput = document.getElementById(`${type}-filters`);
-        const createBtn = document.getElementById(`create-${type}`);
-        const deleteBtn = modal.querySelector(".delete-btn");
     
-        // Set values with proper null checks and defaults
+        // Set values
         if (titleInput) titleInput.value = task.title || '';
         if (notesInput) notesInput.value = task.notes || '';
         if (difficultySelect) difficultySelect.value = task.difficulty || 'medium';
         if (strengthSelect) strengthSelect.value = task.strength || 'medium';
         if (filtersInput) filtersInput.value = task.filters || '';
     
-        // Update buttons
-        if (createBtn) {
-            createBtn.textContent = "Save";
-            createBtn.classList.remove("hidden");
-        }
-        if (deleteBtn) deleteBtn.classList.remove("hidden");
-    
         modal.style.display = "flex";
     }
+
+    function setupTaskModalHandlers() {
+        ['habit', 'daily', 'todo'].forEach(type => {
+            document.getElementById(`create-${type}`).addEventListener("click", async function() {
+                const modal = document.getElementById(`${type}-modal`);
+                const mode = modal.getAttribute("data-mode"); // Check if "edit" or "create"
+                const taskId = modal.getAttribute("data-task-id");
+                
+                console.log("Modal Mode:", mode, "Task ID:", taskId); // Debug log
+                
+                const taskData = {
+                    title: document.getElementById(`${type}-title`).value.trim(),
+                    notes: document.getElementById(`${type}-notes`).value.trim(),
+                    difficulty: document.getElementById(`${type}-difficulty`)?.value || "easy",
+                    strength: document.getElementById(`${type}-strength`)?.value || "weak",
+                    filters: document.getElementById(`${type}-filters`)?.value || "",
+                    type: type
+                };
+    
+                if (!taskData.title) {
+                    alert("Please enter a title");
+                    return;
+                }
+    
+                let result;
+                if (mode === "edit" && taskId) {
+                    console.log("Updating existing task:", taskId); // Debug log
+                    result = await updateTask(taskId, taskData);
+                } else {
+                    console.log("Creating new task"); // Debug log
+                    result = await saveTask(taskData);
+                }
+    
+                if (result) {
+                    modal.style.display = "none";
+                    if (mode === "edit") {
+                        // Update existing card
+                        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
+                        if (taskCard) {
+                            taskCard.querySelector("p").textContent = result.title;
+                            taskCard.setAttribute("data-difficulty", result.difficulty);
+                            taskCard.setAttribute("data-strength", result.strength);
+                        }
+                        console.log("Task updated in DOM"); // Debug log
+                    } else {
+                        // Only add to DOM if it's a new task
+                        addTaskToDOM(result);
+                    }
+                }
+            });
+        });
+    }
+    
+    // Initialize handlers
+    setupTaskModalHandlers();
 
     // 5. Initialize
     loadTasks();
