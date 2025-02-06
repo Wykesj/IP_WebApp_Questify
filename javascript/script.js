@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     
         const taskCard = document.createElement("div");
         taskCard.classList.add("task-card");
+        taskCard.setAttribute("data-category", task.filters || "none");
     
         if (task.type === "habit") {
             taskCard.innerHTML = `
@@ -167,6 +168,37 @@ document.addEventListener("DOMContentLoaded", async function () {
         taskCards.forEach(card => {
             card.style.display = card.querySelector("p").textContent.toLowerCase().includes(query) ? "flex" : "none";
         });
+    });
+
+    // filter functionality 
+    const filterCheckboxes = document.querySelectorAll("#filter-dropdown input[type='checkbox']");
+    const resetFilterBtn = document.getElementById("reset-filters");
+
+    function applyFilters() {
+        let selectedCategories = Array.from(filterCheckboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
+
+        console.log("📌 Active Filters:", selectedCategories);
+
+        document.querySelectorAll(".task-card").forEach(taskCard => {
+            let taskCategory = taskCard.getAttribute("data-category");
+
+            if (selectedCategories.length === 0 || selectedCategories.includes(taskCategory)) {
+                taskCard.style.display = "flex";
+            } else {
+                taskCard.style.display = "none";
+            }
+        });
+    }
+
+    filterCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", applyFilters);
+    });
+
+    resetFilterBtn.addEventListener("click", function () {
+        filterCheckboxes.forEach(checkbox => checkbox.checked = false);
+        applyFilters();
     });
 
     // ✅ Filter Dropdown
