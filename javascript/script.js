@@ -1,235 +1,118 @@
-// Lottie animation for checkbox and Strike-through text
-// Lottie animation for checkbox and Strike-through text
-// Lottie animation for checkbox and Strike-through text
+document.addEventListener("DOMContentLoaded", async function () {
+    // ✅ Initialize Supabase using the CDN method
+    const SUPABASE_URL = "https://ficxsnnbjzskugtblrfw.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpY3hzbm5ianpza3VndGJscmZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MTIzODksImV4cCI6MjA1NDM4ODM4OX0.BcwzBOYhxIj-kbpnpRGp-1Ekf4tjpiFoVfKOujbhFfM";
+    
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-document.addEventListener("DOMContentLoaded", function () {
+    try {
+        const { data, error } = await supabaseClient.from("tasks").select("*").limit(1); // Example test query
+        if (error) throw error;
+        console.log("✅ Supabase connected successfully:", data);
+    } catch (err) {
+        console.error("❌ Supabase connection failed:", err.message);
+    }
+
+    // ✅ Lottie Animation for Checkbox
     document.querySelectorAll(".checkbox-container").forEach((container) => {
-        // Ensure the container and its parent hide overflow
         container.style.overflow = "hidden";
-        container.parentElement.style.overflow = "hidden"; // Ensure the parent container hides overflow
+        container.parentElement.style.overflow = "hidden";
 
         let animation = lottie.loadAnimation({
-            container: container, // Target div
+            container: container,
             renderer: "svg",
             loop: false,
             autoplay: false,
-            path: "../assets/lotties/Checkbox.json", // Path to Lottie file
-            rendererSettings: {
-                scaleMode: 'noScale', // Prevents distortion
-            }
+            path: "../assets/lotties/Checkbox.json",
+            rendererSettings: { scaleMode: 'noScale' }
         });
 
-        // Apply transform to scale the animation
         animation.addEventListener("DOMLoaded", function () {
-            container.style.transform = "scale(2.2)"; // Adjust the scale here
+            container.style.transform = "scale(2.2)";
         });
 
-        let isChecked = false; // Track state
-
+        let isChecked = false;
         container.addEventListener("click", function () {
             if (!isChecked) {
-                animation.playSegments([0, 47], true); // Play check animation
-                this.parentElement.querySelector("p").classList.add("task-completed"); // Add strike-through to text
+                animation.playSegments([0, 47], true);
+                this.parentElement.querySelector("p").classList.add("task-completed");
             } else {
-                animation.playSegments([100, 145], true); // Play uncheck animation
-                this.parentElement.querySelector("p").classList.remove("task-completed"); // Remove strike-through from text
+                animation.playSegments([100, 145], true);
+                this.parentElement.querySelector("p").classList.remove("task-completed");
             }
-            isChecked = !isChecked; // Toggle state
+            isChecked = !isChecked;
         });
     });
-});
 
-
-// Search functionality
-// Search functionality
-// Search functionality
-
-document.addEventListener("DOMContentLoaded", function () {
+    // ✅ Search Functionality
     const searchInput = document.getElementById("search-bar");
     const taskCards = document.querySelectorAll(".task-card");
 
     searchInput.addEventListener("input", function () {
         let query = searchInput.value.toLowerCase();
-
         taskCards.forEach(card => {
-            let taskText = card.querySelector("p").textContent.toLowerCase();
-            if (taskText.includes(query)) {
-                card.style.display = "flex"; // Show matching task
-            } else {
-                card.style.display = "none"; // Hide non-matching tasks
-            }
+            card.style.display = card.querySelector("p").textContent.toLowerCase().includes(query) ? "flex" : "none";
         });
     });
-});
 
-// Filter dropdown Button
-// Filter dropdown Button
-// Filter dropdown Button
-
-document.addEventListener("DOMContentLoaded", function () {
+    // ✅ Filter Dropdown
     const filterBtn = document.getElementById("filter-btn");
     const filterDropdownContainer = document.getElementById("filter-dropdown-container");
 
-    filterBtn.addEventListener("click", function () {
-        filterDropdownContainer.classList.toggle("active"); // Show/hide dropdown
-    });
+    filterBtn.addEventListener("click", () => filterDropdownContainer.classList.toggle("active"));
 
-    // Optional: Hide dropdown when clicking outside
-    document.addEventListener("click", function (event) {
+    document.addEventListener("click", (event) => {
         if (!filterBtn.contains(event.target) && !filterDropdownContainer.contains(event.target)) {
             filterDropdownContainer.classList.remove("active");
         }
     });
-});
 
-
-
-
-// Add Task Dropdown
-// Add Task Dropdown    
-// Add Task Dropdown
-
-document.addEventListener("DOMContentLoaded", function () {
+    // ✅ Add Task Dropdown
     const addTaskContainer = document.getElementById("add-task-container");
     const addTaskBtn = document.getElementById("add-btn");
-    const addTaskDropdown = document.getElementById("add-task-dropdown");
 
-    // Toggle dropdown on click
     addTaskBtn.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevents immediate closing
+        event.stopPropagation();
         addTaskContainer.classList.toggle("active");
     });
 
-    // Close dropdown when clicking outside
-    document.addEventListener("click", function (event) {
+    document.addEventListener("click", (event) => {
         if (!addTaskContainer.contains(event.target)) {
             addTaskContainer.classList.remove("active");
         }
     });
 
-    // Placeholder: Handle Task Type Click (Will Later Open Respective Modal)
     document.querySelectorAll(".dropdown-item").forEach(item => {
         item.addEventListener("click", function () {
-            const taskType = this.getAttribute("data-type");
-            console.log(`Clicked: ${taskType}`); // Replace with modal logic later
-            addTaskContainer.classList.remove("active"); // Close dropdown
+            console.log(`Clicked: ${this.getAttribute("data-type")}`);
+            addTaskContainer.classList.remove("active");
         });
     });
-});
 
+    // ✅ Modal Management 
+    function setupModal(openBtnSelector, modalSelector, closeBtnSelector, cancelBtnSelector, inputSelector, createBtnSelector) {
+        const modal = document.getElementById(modalSelector);
+        const openBtn = document.querySelector(`[data-type="${openBtnSelector}"]`);
+        const closeBtn = document.getElementById(closeBtnSelector);
+        const cancelBtn = document.getElementById(cancelBtnSelector);
+        const createBtn = document.getElementById(createBtnSelector);
+        const titleInput = document.getElementById(inputSelector);
 
-// Add Habit Modal
-// Add Habit Modal
-// Add Habit Modal
+        openBtn.addEventListener("click", () => modal.style.display = "flex");
+        [closeBtn, cancelBtn].forEach(btn => btn.addEventListener("click", () => modal.style.display = "none"));
 
-document.addEventListener("DOMContentLoaded", function () {
-    const habitModal = document.getElementById("habit-modal");
-    const openHabitBtn = document.querySelector('[data-type="habit"]'); // Button in dropdown
-    const closeHabitBtn = document.getElementById("close-habit-modal");
-    const cancelHabitBtn = document.getElementById("cancel-habit");
-    const createHabitBtn = document.getElementById("create-habit");
-    const habitTitleInput = document.getElementById("habit-title");
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        });
 
-    // Show Modal
-    openHabitBtn.addEventListener("click", function () {
-        habitModal.style.display = "flex";
-    });
-
-    // Hide Modal
-    function closeHabitModal() {
-        habitModal.style.display = "none";
+        titleInput.addEventListener("input", () => {
+            createBtn.disabled = titleInput.value.trim() === "";
+        });
     }
 
-    closeHabitBtn.addEventListener("click", closeHabitModal);
-    cancelHabitBtn.addEventListener("click", closeHabitModal);
-
-    // Close on outside click
-    window.addEventListener("click", function (e) {
-        if (e.target === habitModal) {
-            closeHabitModal();
-        }
-    });
-
-    // Enable Create Button Only if Title is Filled
-    habitTitleInput.addEventListener("input", function () {
-        createHabitBtn.disabled = habitTitleInput.value.trim() === "";
-    });
-});
-
-
-// Add Dallies Modal
-// Add Dallies Modal
-// Add Dallies Modal
-
-document.addEventListener("DOMContentLoaded", function () {
-    const dailyModal = document.getElementById("daily-modal");
-    const openDailyBtn = document.querySelector('[data-type="daily"]'); // Button in dropdown
-    const closeDailyBtn = document.getElementById("close-daily-modal");
-    const cancelDailyBtn = document.getElementById("cancel-daily");
-    const createDailyBtn = document.getElementById("create-daily");
-    const dailyTitleInput = document.getElementById("daily-title");
-
-    // Show Modal
-    openDailyBtn.addEventListener("click", function () {
-        dailyModal.style.display = "flex";
-    });
-
-    // Hide Modal
-    function closeDailyModal() {
-        dailyModal.style.display = "none";
-    }
-
-    closeDailyBtn.addEventListener("click", closeDailyModal);
-    cancelDailyBtn.addEventListener("click", closeDailyModal);
-
-    // Close on outside click
-    window.addEventListener("click", function (e) {
-        if (e.target === dailyModal) {
-            closeDailyModal();
-        }
-    });
-
-    // Enable Create Button Only if Title is Filled
-    dailyTitleInput.addEventListener("input", function () {
-        createDailyBtn.disabled = dailyTitleInput.value.trim() === "";
-    });
-});
-
-
-// Add Todos Modal
-// Add Todos Modal
-// Add Todos Modal
-
-document.addEventListener("DOMContentLoaded", function () {
-    const todoModal = document.getElementById("todo-modal");
-    const openTodoBtn = document.querySelector('[data-type="todo"]'); // Button in dropdown
-    const closeTodoBtn = document.getElementById("close-todo-modal");
-    const cancelTodoBtn = document.getElementById("cancel-todo");
-    const createTodoBtn = document.getElementById("create-todo");
-    const todoTitleInput = document.getElementById("todo-title");
-
-    // Show Modal
-    openTodoBtn.addEventListener("click", function () {
-        todoModal.style.display = "flex";
-    });
-
-    // Hide Modal
-    function closeTodoModal() {
-        todoModal.style.display = "none";
-    }
-
-    closeTodoBtn.addEventListener("click", closeTodoModal);
-    cancelTodoBtn.addEventListener("click", closeTodoModal);
-
-    // Close on outside click
-    window.addEventListener("click", function (e) {
-        if (e.target === todoModal) {
-            closeTodoModal();
-        }
-    });
-
-    // Enable Create Button Only if Title is Filled
-    todoTitleInput.addEventListener("input", function () {
-        createTodoBtn.disabled = todoTitleInput.value.trim() === "";
-    });
+    // ✅ Setup Modals
+    setupModal("habit", "habit-modal", "close-habit-modal", "cancel-habit", "habit-title", "create-habit");
+    setupModal("daily", "daily-modal", "close-daily-modal", "cancel-daily", "daily-title", "create-daily");
+    setupModal("todo", "todo-modal", "close-todo-modal", "cancel-todo", "todo-title", "create-todo");
 });
