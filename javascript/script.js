@@ -1,13 +1,3 @@
-//API
-
-const SUPABASE_URL = "https://supabase.com/dashboard/project/ficxsnnbjzskugtblrfw.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpY3hzbm5ianpza3VndGJscmZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MTIzODksImV4cCI6MjA1NDM4ODM4OX0.BcwzBOYhxIj-kbpnpRGp-1Ekf4tjpiFoVfKOujbhFfM";
-
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-
-
-
 // Lottie animation for checkbox and Strike-through text
 // Lottie animation for checkbox and Strike-through text
 // Lottie animation for checkbox and Strike-through text
@@ -219,24 +209,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const todoTitleInput = document.getElementById("todo-title");
 
     // Show Modal
-    if (openTodoBtn) {
-        openTodoBtn.addEventListener("click", function () {
-            todoModal.classList.remove("hidden");
-        });
-    }
+    openTodoBtn.addEventListener("click", function () {
+        todoModal.style.display = "flex";
+    });
 
     // Hide Modal
     function closeTodoModal() {
-        todoModal.classList.add("hidden");
+        todoModal.style.display = "none";
     }
 
-    if (closeTodoBtn) {
-        closeTodoBtn.addEventListener("click", closeTodoModal);
-    }
-
-    if (cancelTodoBtn) {
-        cancelTodoBtn.addEventListener("click", closeTodoModal);
-    }
+    closeTodoBtn.addEventListener("click", closeTodoModal);
+    cancelTodoBtn.addEventListener("click", closeTodoModal);
 
     // Close on outside click
     window.addEventListener("click", function (e) {
@@ -246,14 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Enable Create Button Only if Title is Filled
-    if (todoTitleInput) {
-        todoTitleInput.addEventListener("input", function () {
-            createTodoBtn.disabled = todoTitleInput.value.trim() === "";
-            if (createTodoBtn.disabled) {
-                createTodoBtn.classList.remove("active");
-            } else {
-                createTodoBtn.classList.add("active");
-            }
-        });
-    }
+    todoTitleInput.addEventListener("input", function () {
+        createTodoBtn.disabled = todoTitleInput.value.trim() === "";
+    });
 });
