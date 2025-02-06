@@ -161,14 +161,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // ✅ Search Functionality
     const searchInput = document.getElementById("search-bar");
-    const taskCards = document.querySelectorAll(".task-card");
 
-    searchInput.addEventListener("input", function () {
+    function searchTasks() {
         let query = searchInput.value.toLowerCase();
-        taskCards.forEach(card => {
-            card.style.display = card.querySelector("p").textContent.toLowerCase().includes(query) ? "flex" : "none";
+        document.querySelectorAll(".task-card").forEach(taskCard => {
+            let taskTitle = taskCard.querySelector("p").textContent.toLowerCase();
+            taskCard.style.display = taskTitle.includes(query) ? "flex" : "none";
         });
-    });
+    }
+
+    searchInput.addEventListener("input", searchTasks);
 
     // filter functionality 
     const filterCheckboxes = document.querySelectorAll("#filter-dropdown input[type='checkbox']");
