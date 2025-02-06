@@ -35,24 +35,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Save Task to Supabase
     async function saveTask(taskData) {
         try {
-            console.log("📤 Attempting to insert task into Supabase:", taskData); // Debugging log
-    
-            const { data, error } = await supabaseClient.from("tasks").insert([taskData]);
+            console.log("📤 Attempting to insert task into Supabase:", taskData);
+            
+            const { data, error } = await supabaseClient.from("tasks").insert([taskData]).select(); // Ensure `select()` is called to get the response including `id`.
     
             if (error) {
-                console.error("❌ Supabase Error:", error);
+                console.error("❌ Supabase Error:", error.message);
                 alert("Failed to add task: " + error.message);
                 return false;
             }
     
             console.log("✅ Task successfully added:", data);
-            return true;
+            
+            return data[0]; 
         } catch (err) {
             console.error("❌ Unexpected error:", err);
             alert("An unexpected error occurred.");
             return false;
         }
-    } 
+    }    
 
     function addTaskToDOM(task) {
         let taskContainer;
@@ -72,6 +73,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     
         const taskCard = document.createElement("div");
         taskCard.classList.add("task-card");
+        taskCard.setAttribute("data-task-id", task.id);
         taskCard.setAttribute("data-category", task.filters || "none");
         taskCard.setAttribute("data-difficulty", task.difficulty || "easy");
         taskCard.setAttribute("data-strength", task.strength || "weak");
@@ -121,11 +123,83 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     
         taskContainer.appendChild(taskCard);
+        attachTaskEditListener(taskCard);
     
-        console.log("✅ Task added to DOM with Lottie and Resizing:", task);
+        console.log("✅ Task added to DOM with ID:", task.id, task);
     }
     
+    function attachTaskEditListener(taskCard) {
+        taskCard.addEventListener("click", async function() {
+            const taskId = this.dataset.taskId;
+            const taskType = this.closest(".task-container").id.slice(0, -1);
+            
+            console.log("📌 Editing Task:", taskId, "Type:", taskType);
+            
+            const taskData = await fetchTask(taskId);
+            if (taskData) openEditModal(taskType, taskData);
+        });
+    }
+
+    async function fetchTask(taskId) {
+        try {
+            const { data, error } = await supabaseClient
+                .from("tasks")
+                .select("id, title, notes, type, difficulty, strength, filters")
+                .eq("id", taskId)
+                .single();
+                
+            if (error) throw error;
+            
+            console.log("📌 Fetched Task Data:", data);
+            return data;
+        } catch (err) {
+            console.error("❌ Error fetching task:", err.message);
+            return null;
+        }
+    }
     
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function openEditModal(type, task) {
+        const modal = document.getElementById(`${type}-modal`);
+        if (!modal) {
+            console.error(`❌ Modal not found for type: ${type}`);
+            return;
+        }
+    
+        // Set modal mode and task ID
+        modal.setAttribute("data-mode", "edit");
+        modal.setAttribute("data-task-id", task.id); // Using 'id' instead of 'taskId'
+    
+        modal.querySelector(".modal-header h2").textContent = `Edit ${capitalizeFirstLetter(type)}`;
+    
+        // Fill form fields with null checks
+        const titleInput = document.getElementById(`${type}-title`);
+        const notesInput = document.getElementById(`${type}-notes`);
+        const difficultySelect = document.getElementById(`${type}-difficulty`);
+        const strengthSelect = document.getElementById(`${type}-strength`);
+        const filtersInput = document.getElementById(`${type}-filters`);
+        const createBtn = document.getElementById(`create-${type}`);
+        const deleteBtn = modal.querySelector(".delete-btn");
+    
+        // Set values with proper null checks and defaults
+        if (titleInput) titleInput.value = task.title || '';
+        if (notesInput) notesInput.value = task.notes || '';
+        if (difficultySelect) difficultySelect.value = task.difficulty || 'medium';
+        if (strengthSelect) strengthSelect.value = task.strength || 'medium';
+        if (filtersInput) filtersInput.value = task.filters || '';
+    
+        // Update buttons
+        if (createBtn) {
+            createBtn.textContent = "Save";
+            createBtn.classList.remove("hidden");
+        }
+        if (deleteBtn) deleteBtn.classList.remove("hidden");
+    
+        modal.style.display = "flex";
+    }
 
     // 5. Initialize
     loadTasks();
