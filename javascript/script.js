@@ -469,6 +469,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     });
     
+    function resetModal(modal) {
+    modal.style.display = "none";
+    modal.setAttribute("data-mode", "create"); // ✅ Reset back to "create" mode
+    modal.removeAttribute("data-task-id"); // ✅ Remove the stored task ID
+}
+
 
     // ✅ Modal Management 
     function setupModal(openBtnSelector, modalSelector, closeBtnSelector, cancelBtnSelector, inputSelector, createBtnSelector) {
@@ -493,10 +499,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             document.getElementById(`${openBtnSelector}-filters`).value = "";
         });
     
-        [closeBtn, cancelBtn].forEach(btn => btn.addEventListener("click", () => modal.style.display = "none"));
+        [closeBtn, cancelBtn].forEach(btn => btn.addEventListener("click", () => resetModal(modal)));
     
         window.addEventListener("click", (e) => {
-            if (e.target === modal) modal.style.display = "none";
+            if (e.target === modal) resetModal(modal);
         });
     
         titleInput.addEventListener("input", () => {
@@ -569,7 +575,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     
 
-    // Add closeModal function here
+    // closeModal function here
     function closeModal(type) {
         const modal = document.getElementById(`${type}-modal`);
         if (modal) {
