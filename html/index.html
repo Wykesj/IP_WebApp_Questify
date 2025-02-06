@@ -207,6 +207,48 @@
         <p>&copy; 2025 Questify. All rights reserved.</p>
     </footer>
 
+    <!-- Create Habit Modal (Hidden by Default) -->
+    <div id="habit-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Habit</h2>
+                <button id="close-habit-modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Title -->
+                <label for="habit-title">Title*</label>
+                <input type="text" id="habit-title" placeholder="Add a title">
+
+                <!-- Notes -->
+                <label for="habit-notes">Notes</label>
+                <textarea id="habit-notes" placeholder="Add notes"></textarea>
+
+                <!-- Strength Dropdown (Weak/Strong) -->
+                <label for="habit-strength">Strength</label>
+                <select id="habit-strength">
+                    <option value="weak">Weak</option>
+                    <option value="strong">Strong</option>
+                </select>
+
+                <!-- Filters Dropdown -->
+                <label for="habit-filters">Filters</label>
+                <select id="habit-filters">
+                    <option value="none" disabled selected>Select Filters</option>
+                    <option value="work">Work</option>
+                    <option value="school">School</option>
+                    <option value="exercise">Exercise</option>
+                    <option value="errands">Errands</option>
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button id="cancel-habit" class="cancel-btn">Cancel</button>
+                <button id="create-habit" class="create-btn" disabled>Create</button>
+            </div>
+        </div>
+    </div>
+
     <script src="..\javascript\script.js"></script>
 </body>
 </html>

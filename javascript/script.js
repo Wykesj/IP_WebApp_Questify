@@ -116,3 +116,42 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+// Add Habit Modal
+// Add Habit Modal
+// Add Habit Modal
+
+document.addEventListener("DOMContentLoaded", function () {
+    const habitModal = document.getElementById("habit-modal");
+    const openHabitBtn = document.querySelector('[data-type="habit"]'); // Button in dropdown
+    const closeHabitBtn = document.getElementById("close-habit-modal");
+    const cancelHabitBtn = document.getElementById("cancel-habit");
+    const createHabitBtn = document.getElementById("create-habit");
+    const habitTitleInput = document.getElementById("habit-title");
+
+    // Show Modal
+    openHabitBtn.addEventListener("click", function () {
+        habitModal.style.display = "flex";
+    });
+
+    // Hide Modal
+    function closeHabitModal() {
+        habitModal.style.display = "none";
+    }
+
+    closeHabitBtn.addEventListener("click", closeHabitModal);
+    cancelHabitBtn.addEventListener("click", closeHabitModal);
+
+    // Close on outside click
+    window.addEventListener("click", function (e) {
+        if (e.target === habitModal) {
+            closeHabitModal();
+        }
+    });
+
+    // Enable Create Button Only if Title is Filled
+    habitTitleInput.addEventListener("input", function () {
+        createHabitBtn.disabled = habitTitleInput.value.trim() === "";
+    });
+});
