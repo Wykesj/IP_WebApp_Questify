@@ -1224,6 +1224,15 @@ body {
     cursor: not-allowed;
 }
 
+.save-btn {
+    background: #673AB7;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    border-radius: 0.3125rem;
+}
+
 #success-overlay {
     position: fixed;
     top: 0;
@@ -1278,6 +1287,11 @@ body {
 
 
 
+#edit-habit-modal .create-btn,
+#edit-daily-modal .create-btn,
+#edit-todo-modal .create-btn {
+    display: none !important;
+}
 
 
 

@@ -181,15 +181,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Add update task function
     async function updateTask(taskId, taskData) {
         try {
+            console.log("📌 Updating task in Supabase:", taskId, taskData); // Debug log
+    
             const { data, error } = await supabaseClient
                 .from("tasks")
                 .update(taskData)
                 .eq("id", taskId)
-                .select();
-
+                .select(); // Ensure we get the updated task
+    
             if (error) throw error;
+            
             console.log("✅ Task updated:", data);
-            return data[0];
+            return data[0]; // Return updated task
         } catch (err) {
             console.error("❌ Error updating task:", err.message);
             return null;
@@ -226,7 +229,66 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (difficultySelect) difficultySelect.value = task.difficulty || 'medium';
         if (strengthSelect) strengthSelect.value = task.strength || 'medium';
         if (filtersInput) filtersInput.value = task.filters || '';
-    
+        
+        // Remove "Create" button if it exists in the edit modal
+        const createBtn = modal.querySelector(".create-btn");
+        if (createBtn) createBtn.remove();
+
+        // ✅ Ensure "Save Changes" button is added if missing
+        const modalFooter = modal.querySelector(".modal-footer");
+
+        // Check if "Save" button already exists
+        let saveBtn = modal.querySelector(".save-btn");
+        if (!saveBtn) {
+            saveBtn = document.createElement("button");
+            saveBtn.classList.add("btn", "save-btn");
+            saveBtn.id = `save-${type}`;
+            saveBtn.textContent = "Save Changes";
+            
+            // ✅ Add event listener to handle saving the task
+            saveBtn.addEventListener("click", async function() {
+                console.log("🛠 Saving task...");
+            
+                const updatedTask = {
+                    title: document.getElementById(`${type}-title`).value.trim(),
+                    notes: document.getElementById(`${type}-notes`).value.trim(),
+                    difficulty: document.getElementById(`${type}-difficulty`)?.value || "easy",
+                    strength: document.getElementById(`${type}-strength`)?.value || "weak",
+                    filters: document.getElementById(`${type}-filters`)?.value || "",
+                    type: type
+                };
+            
+                console.log("📤 Sending updated task data:", updatedTask);
+            
+                const result = await updateTask(task.id, updatedTask);
+                console.log("✅ Update result:", result);
+            
+                if (result) {
+                    console.log("✅ Task updated successfully!");
+            
+                    // ✅ Update task card in the UI
+                    const taskCard = document.querySelector(`[data-task-id="${task.id}"]`);
+                    if (taskCard) {
+                        taskCard.querySelector("p").textContent = result.title; // Update title
+                        taskCard.setAttribute("data-difficulty", result.difficulty);
+                        taskCard.setAttribute("data-strength", result.strength);
+                        taskCard.setAttribute("data-category", result.filters || "none");
+            
+                        console.log("✅ Task updated in DOM:", taskCard);
+                    } else {
+                        console.warn("⚠️ Task card not found in DOM!");
+                    }
+            
+                    modal.style.display = "none"; // Close modal after saving
+                } else {
+                    console.error("❌ Failed to update task!");
+                    alert("Error updating task.");
+                }
+            });            
+
+            modalFooter.appendChild(saveBtn);
+        }
+
         modal.style.display = "flex";
     }
     
@@ -379,9 +441,34 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.querySelectorAll(".dropdown-item").forEach(item => {
         item.addEventListener("click", function () {
             console.log(`Clicked: ${this.getAttribute("data-type")}`);
-            addTaskContainer.classList.remove("active");
+    
+            const type = this.getAttribute("data-type"); // Get the type (habit, daily, todo)
+    
+            // ✅ Ensure correct modal is used
+            const modal = document.getElementById(
+                type === "habit" ? "habit-modal" :
+                type === "daily" ? "daily-modal" :
+                type === "todo" ? "todo-modal" :
+                null
+            );
+    
+            if (modal) {
+                modal.style.display = "flex";
+                modal.setAttribute("data-mode", "create");
+                modal.removeAttribute("data-task-id"); // ✅ Ensure it's in create mode
+    
+                // ✅ Clear form fields
+                document.getElementById(`${type}-title`).value = "";
+                document.getElementById(`${type}-notes`).value = "";
+                document.getElementById(`${type}-difficulty`).value = "easy";
+                document.getElementById(`${type}-strength`).value = "weak";
+                document.getElementById(`${type}-filters`).value = "";
+            } else {
+                console.error(`❌ Modal not found for type: ${type}`);
+            }
         });
     });
+    
 
     // ✅ Modal Management 
     function setupModal(openBtnSelector, modalSelector, closeBtnSelector, cancelBtnSelector, inputSelector, createBtnSelector) {
