@@ -831,6 +831,7 @@ body {
 /* ============================== */
 /* FILTER BUTTONS */
 /* ============================== */
+
 .filter-tabs {
     display: flex;
     justify-content: center;
@@ -838,20 +839,29 @@ body {
     margin-bottom: 10px;
 }
 
-.filter-tabs a {
+.filter-btn {
     text-decoration: none;
-    color: white;
-    background: rgba(255, 255, 255, 0.2); /* Subtle transparent background */
-    padding: 5px 12px;
-    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);  /* Subtle but readable */
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
     font-weight: bold;
-    transition: 0.3s;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Active Filter Button */
-.filter-tabs a.active {
+.filter-btn.active {
+    background: #007BFF;
     color: white;
-    background: #007BFF; 
+    font-weight: bold;
 }
 
 /* ============================== */

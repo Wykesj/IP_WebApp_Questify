@@ -73,6 +73,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const taskCard = document.createElement("div");
         taskCard.classList.add("task-card");
         taskCard.setAttribute("data-category", task.filters || "none");
+        taskCard.setAttribute("data-difficulty", task.difficulty || "easy");
+        taskCard.setAttribute("data-strength", task.strength || "weak");
     
         if (task.type === "habit") {
             taskCard.innerHTML = `
@@ -127,6 +129,44 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // 5. Initialize
     loadTasks();
+
+    function filterTasksByDifficulty() {
+        let selectedStrength = document.querySelector("#habit-filters .filter-btn.active")?.getAttribute("data-filter");
+        let selectedDailyDifficulty = document.querySelector("#daily-filters .filter-btn.active")?.getAttribute("data-filter");
+        let selectedTodoDifficulty = document.querySelector("#todo-filters .filter-btn.active")?.getAttribute("data-filter");
+    
+        document.querySelectorAll(".task-card").forEach(taskCard => {
+            let taskType = taskCard.closest(".task-container").id; // Get Parent Section ID
+            let taskDifficulty = taskCard.getAttribute("data-difficulty");
+            let taskStrength = taskCard.getAttribute("data-strength");
+    
+            let showTask = true;
+    
+            // ✅ Separate Filtering Logic for Each Section
+            if (taskType === "habits") {
+                showTask = selectedStrength === "all" || taskStrength === selectedStrength;
+            } else if (taskType === "dailies") {
+                showTask = selectedDailyDifficulty === "all" || taskDifficulty === selectedDailyDifficulty;
+            } else if (taskType === "todos") {
+                showTask = selectedTodoDifficulty === "all" || taskDifficulty === selectedTodoDifficulty;
+            }
+    
+            taskCard.style.display = showTask ? "flex" : "none";
+        });
+    }
+    
+
+    const difficultyFilters = document.querySelectorAll("#habit-filters .filter-btn, #daily-filters .filter-btn, #todo-filters .filter-btn");
+
+    difficultyFilters.forEach(btn => {
+        btn.addEventListener("click", function () {
+            let parentNav = this.parentElement;
+            parentNav.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+            filterTasksByDifficulty();
+        });
+    });
+
 
     // ✅ Lottie Animation for Checkbox
     document.querySelectorAll(".checkbox-container").forEach((container) => {
