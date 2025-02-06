@@ -165,8 +165,8 @@
                 <h3>Dailies</h3>
                 <nav class="filter-tabs">
                     <a href="#" class="active">All</a>
-                    <a href="#">Due</a>
-                    <a href="#">Not Due</a>
+                    <a href="#">Easy</a>
+                    <a href="#">Hard</a>
                 </nav>
                 <div class="task-list">
                     <div class="task-card">
@@ -245,6 +245,44 @@
             <div class="modal-footer">
                 <button id="cancel-habit" class="cancel-btn">Cancel</button>
                 <button id="create-habit" class="create-btn" disabled>Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Task Modal -->
+    <div id="daily-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Daily Task</h2>
+                <button id="close-daily-modal">&times;</button> 
+            </div>
+
+            <div class="modal-body">
+                <label for="daily-title">Title*</label>
+                <input type="text" id="daily-title" placeholder="Add a title">
+
+                <label for="daily-notes">Notes</label>
+                <textarea id="daily-notes" placeholder="Add notes"></textarea>
+
+                <label for="daily-difficulty">Difficulty</label>
+                <select id="daily-difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="hard">Hard</option>
+                </select>
+
+                <label for="daily-filters">Filters</label>
+                <select id="daily-filters">
+                    <option value="">Select Filters</option>
+                    <option value="work">Work</option>
+                    <option value="school">School</option>
+                    <option value="exercise">Exercise</option>
+                    <option value="errands">Errands</option>
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button id="cancel-daily" class="cancel-btn">Cancel</button> 
+                <button id="create-daily" class="create-btn" disabled>Create</button> 
             </div>
         </div>
     </div>

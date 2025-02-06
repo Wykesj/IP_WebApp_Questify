@@ -155,3 +155,42 @@ document.addEventListener("DOMContentLoaded", function () {
         createHabitBtn.disabled = habitTitleInput.value.trim() === "";
     });
 });
+
+
+// Add Dallies Modal
+// Add Dallies Modal
+// Add Dallies Modal
+
+document.addEventListener("DOMContentLoaded", function () {
+    const dailyModal = document.getElementById("daily-modal");
+    const openDailyBtn = document.querySelector('[data-type="daily"]'); // Button in dropdown
+    const closeDailyBtn = document.getElementById("close-daily-modal");
+    const cancelDailyBtn = document.getElementById("cancel-daily");
+    const createDailyBtn = document.getElementById("create-daily");
+    const dailyTitleInput = document.getElementById("daily-title");
+
+    // Show Modal
+    openDailyBtn.addEventListener("click", function () {
+        dailyModal.style.display = "flex";
+    });
+
+    // Hide Modal
+    function closeDailyModal() {
+        dailyModal.style.display = "none";
+    }
+
+    closeDailyBtn.addEventListener("click", closeDailyModal);
+    cancelDailyBtn.addEventListener("click", closeDailyModal);
+
+    // Close on outside click
+    window.addEventListener("click", function (e) {
+        if (e.target === dailyModal) {
+            closeDailyModal();
+        }
+    });
+
+    // Enable Create Button Only if Title is Filled
+    dailyTitleInput.addEventListener("input", function () {
+        createDailyBtn.disabled = dailyTitleInput.value.trim() === "";
+    });
+});

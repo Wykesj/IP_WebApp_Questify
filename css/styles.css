@@ -1056,10 +1056,11 @@ body {
 }
 
 /* Close Button */
+#close-daily-modal,
 #close-habit-modal {
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 25px;
     color: white;
     cursor: pointer;
 }
