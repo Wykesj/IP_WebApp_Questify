@@ -130,12 +130,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     function attachTaskEditListener(taskCard) {
         taskCard.addEventListener("click", async function(event) {
-            // Debug logging
             console.log("🔍 Clicked element:", event.target);
             
             // Prevent edit modal for checkbox clicks
-            if (event.target.closest('.checkbox-container') || 
-                event.target.closest('.habit-btn')) {
+            if (event.target.closest('.checkbox-container') || event.target.closest('.habit-btn')) {
                 console.log("⚠️ Click ignored - checkbox or habit button");
                 return;
             }
@@ -155,10 +153,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             const taskData = await fetchTask(taskId);
             if (taskData) {
                 console.log("📌 Opening modal for:", taskType, taskData);
+                
+                // ✅ Open the modal in edit mode
                 openEditModal(taskType, taskData);
             }
         });
-    }
+    }    
 
     async function fetchTask(taskId) {
         try {
@@ -228,58 +228,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (filtersInput) filtersInput.value = task.filters || '';
     
         modal.style.display = "flex";
-    }
-
-    function setupTaskModalHandlers() {
-        ['habit', 'daily', 'todo'].forEach(type => {
-            document.getElementById(`create-${type}`).addEventListener("click", async function() {
-                const modal = document.getElementById(`${type}-modal`);
-                const mode = modal.getAttribute("data-mode"); // Check if "edit" or "create"
-                const taskId = modal.getAttribute("data-task-id");
-                
-                console.log("Modal Mode:", mode, "Task ID:", taskId); // Debug log
-                
-                const taskData = {
-                    title: document.getElementById(`${type}-title`).value.trim(),
-                    notes: document.getElementById(`${type}-notes`).value.trim(),
-                    difficulty: document.getElementById(`${type}-difficulty`)?.value || "easy",
-                    strength: document.getElementById(`${type}-strength`)?.value || "weak",
-                    filters: document.getElementById(`${type}-filters`)?.value || "",
-                    type: type
-                };
-    
-                if (!taskData.title) {
-                    alert("Please enter a title");
-                    return;
-                }
-    
-                let result;
-                if (mode === "edit" && taskId) {
-                    console.log("Updating existing task:", taskId); // Debug log
-                    result = await updateTask(taskId, taskData);
-                } else {
-                    console.log("Creating new task"); // Debug log
-                    result = await saveTask(taskData);
-                }
-    
-                if (result) {
-                    modal.style.display = "none";
-                    if (mode === "edit") {
-                        // Update existing card
-                        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
-                        if (taskCard) {
-                            taskCard.querySelector("p").textContent = result.title;
-                            taskCard.setAttribute("data-difficulty", result.difficulty);
-                            taskCard.setAttribute("data-strength", result.strength);
-                        }
-                        console.log("Task updated in DOM"); // Debug log
-                    } else {
-                        // Only add to DOM if it's a new task
-                        addTaskToDOM(result);
-                    }
-                }
-            });
-        });
     }
     
     // Initialize handlers
@@ -443,14 +391,27 @@ document.addEventListener("DOMContentLoaded", async function () {
         const cancelBtn = document.getElementById(cancelBtnSelector);
         const createBtn = document.getElementById(createBtnSelector);
         const titleInput = document.getElementById(inputSelector);
-
-        openBtn.addEventListener("click", () => modal.style.display = "flex");
+    
+        // ✅ When opening the modal via "Create", reset it to create mode
+        openBtn.addEventListener("click", () => {
+            modal.style.display = "flex";
+            modal.setAttribute("data-mode", "create");
+            modal.removeAttribute("data-task-id"); // ✅ Ensure no old task ID remains
+    
+            // ✅ Clear form fields
+            titleInput.value = "";
+            document.getElementById(`${openBtnSelector}-notes`).value = "";
+            document.getElementById(`${openBtnSelector}-difficulty`).value = "easy";
+            document.getElementById(`${openBtnSelector}-strength`).value = "weak";
+            document.getElementById(`${openBtnSelector}-filters`).value = "";
+        });
+    
         [closeBtn, cancelBtn].forEach(btn => btn.addEventListener("click", () => modal.style.display = "none"));
-
+    
         window.addEventListener("click", (e) => {
             if (e.target === modal) modal.style.display = "none";
         });
-
+    
         titleInput.addEventListener("input", () => {
             createBtn.disabled = titleInput.value.trim() === "";
         });
@@ -461,11 +422,65 @@ document.addEventListener("DOMContentLoaded", async function () {
     setupModal("daily", "daily-modal", "close-daily-modal", "cancel-daily", "daily-title", "create-daily");
     setupModal("todo", "todo-modal", "close-todo-modal", "cancel-todo", "todo-title", "create-todo");
 
-    // ✅ Add Event Listeners for Task Creation
-    document.getElementById("create-habit").addEventListener("click", () => handleTaskSubmission("habit"));
-    document.getElementById("create-daily").addEventListener("click", () => handleTaskSubmission("daily"));
-    document.getElementById("create-todo").addEventListener("click", () => handleTaskSubmission("todo"));
-
+    function setupTaskModalHandlers() {
+        ['habit', 'daily', 'todo'].forEach(type => {
+            let createBtn = document.getElementById(`create-${type}`);
+    
+            // ✅ Clone button to remove all previous event listeners
+            let newCreateBtn = createBtn.cloneNode(true);
+            createBtn.replaceWith(newCreateBtn);
+    
+            newCreateBtn.addEventListener("click", async function() {
+                const modal = document.getElementById(`${type}-modal`);
+                
+                // ✅ Keep edit mode if it was set, otherwise default to "create"
+                let mode = modal.getAttribute("data-mode") || "create";
+                let taskId = modal.getAttribute("data-task-id") || null;
+    
+                console.log("Modal Mode:", mode, "Task ID:", taskId);
+    
+                const taskData = {
+                    title: document.getElementById(`${type}-title`).value.trim(),
+                    notes: document.getElementById(`${type}-notes`).value.trim(),
+                    difficulty: document.getElementById(`${type}-difficulty`)?.value || "easy",
+                    strength: document.getElementById(`${type}-strength`)?.value || "weak",
+                    filters: document.getElementById(`${type}-filters`)?.value || "",
+                    type: type
+                };
+    
+                if (!taskData.title) {
+                    alert("Please enter a title");
+                    return;
+                }
+    
+                let result;
+                if (mode === "edit" && taskId) {
+                    console.log("Updating existing task:", taskId);
+                    result = await updateTask(taskId, taskData);
+                } else {
+                    console.log("Creating new task");
+                    result = await saveTask(taskData);
+                }
+    
+                if (result) {
+                    modal.style.display = "none";
+                    if (mode === "edit") {
+                        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
+                        if (taskCard) {
+                            taskCard.querySelector("p").textContent = result.title;
+                            taskCard.setAttribute("data-difficulty", result.difficulty);
+                            taskCard.setAttribute("data-strength", result.strength);
+                        }
+                        console.log("Task updated in DOM");
+                    } else {
+                        addTaskToDOM(result);
+                    }
+                }
+            });
+        });
+    }
+    
+    
 
     // Add closeModal function here
     function closeModal(type) {
