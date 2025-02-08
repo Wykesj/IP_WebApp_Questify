@@ -12,6 +12,42 @@ document.addEventListener("DOMContentLoaded", function () {
     const equipmentTab = document.querySelector(".tab[data-tab='equipment']");
     const sortSelect = document.getElementById("sort-items");
 
+    // Item Confirmation Modal
+    const itemModal = document.getElementById("item-modal");
+    const modalItemName = document.getElementById("modal-item-name");
+    const modalItemDescription = document.getElementById("modal-item-description");
+    const useItemBtn = document.getElementById("use-item-btn");
+    const cancelItemBtn = document.getElementById("cancel-item-btn");
+
+
+    let selectedItem = null;
+
+    inventoryItems.forEach(item => {
+        item.addEventListener("click", function () {
+            selectedItem = item; // Store the clicked item
+            const itemName = item.getAttribute("data-name");
+            const itemEffect = item.getAttribute("data-effect");
+
+            modalItemName.innerText = `Use ${itemName}?`;
+            modalItemDescription.innerText = itemEffect;
+            itemModal.classList.remove("hidden");
+        });
+    });
+
+    cancelItemBtn.addEventListener("click", function () {
+        itemModal.classList.add("hidden"); // Hide modal on cancel
+    });
+
+    useItemBtn.addEventListener("click", function () {
+        if (selectedItem) {
+            const statToIncrease = selectedItem.getAttribute("data-stat");
+            const increaseAmount = parseInt(selectedItem.getAttribute("data-amount"));
+
+            useItem(statToIncrease, increaseAmount);
+            itemModal.classList.add("hidden");
+        }
+    });
+
     //Fetch Player Stats
     //Fetch Player Stats
     //Fetch Player Stats
@@ -34,6 +70,65 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("❌ Error Fetching Player Stats:", err.message);
         }
     }
+    
+    async function useItem(statList, amount) {
+        const userId = 1; // Replace with dynamic user ID
+    
+        try {
+            const statsToUpdate = statList.split(",");
+
+            // Default values for reset
+            const defaultValues = { strength: 47, vitality: 12, intelligence: 35, agility: 22 };
+    
+            // Fetch current stats
+            let { data, error } = await supabaseClient
+                .from("player_stats")
+                .select(statsToUpdate.join(",") + ", level")
+                .eq("id", userId)
+                .single();
+    
+            if (error) throw error;
+    
+            let updates = {};
+    
+            statsToUpdate.forEach(stat => {
+                let newStatValue = data[stat] + amount;
+    
+                // Special handling for XP 
+                if (stat === "xp") {
+                    if (newStatValue >= 1000) {
+                        let levelsGained = Math.floor(newStatValue / 1000); // How many levels to add
+                        newStatValue = newStatValue % 1000; // Carry over extra XP
+    
+                        updates["level"] = data.level + levelsGained; // Correctly increase level
+                        console.log(`Level Up! New Level: ${updates["level"]}`);
+                    }
+                } 
+                //  Other stats should reset if exceeding 100
+                else if (newStatValue > 100) {
+                    newStatValue = defaultValues[stat];
+                }
+    
+                updates[stat] = newStatValue;
+            });
+    
+            // Update Supabase
+            const { error: updateError } = await supabaseClient
+                .from("player_stats")
+                .update(updates)
+                .eq("id", userId);
+    
+            if (updateError) throw updateError;
+    
+            console.log(`✅ Updated Stats:`, updates);
+    
+            //  Refresh status screen after update
+            fetchPlayerStats();
+        } catch (err) {
+            console.error("❌ Error using item:", err.message);
+        }
+    }
+    
     
 
     function updateStatusScreen(stats) {

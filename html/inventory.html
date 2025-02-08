@@ -91,7 +91,7 @@
                 </div>
             </section>
             
-        </main> <!-- Closes the `#dashboard` section -->
+        </main> 
 
         <!-- INVENTORY SECTION -->
         <section id="inventory-section">
@@ -134,63 +134,111 @@
             
                     <!-- Inventory Grid -->
                     <div id="inventory-grid">
-                        <!-- 🧪 Potions Section -->
+                        <!-- Potions Section -->
                         <div class="inventory-category">
                             <h3>Potions</h3>
                             <div class="inventory-items">
-                                <div class="inventory-item" data-category="potions">
+                                <div class="inventory-item" 
+                                    data-category="potions" 
+                                    data-name="Vitality Potion" 
+                                    data-effect="Restores health" 
+                                    data-stat="vitality" 
+                                    data-amount="10">
                                     <img src="../assets/images/vitality_potion.png" alt="Vitality Potion">
                                     <div class="item-tooltip">Vitality Potion - Restores health</div>
                                 </div>
-                                <div class="inventory-item" data-category="potions">
+
+                                <div class="inventory-item" 
+                                    data-category="potions" 
+                                    data-name="Intelligence Potion" 
+                                    data-effect="Boosts intelligence" 
+                                    data-stat="intelligence" 
+                                    data-amount="10">
                                     <img src="../assets/images/intelligence_potion.png" alt="Intelligence Potion">
                                     <div class="item-tooltip">Intelligence Potion - Boosts mind power</div>
                                 </div>
-                                <div class="inventory-item" data-category="potions">
+
+                                <div class="inventory-item" 
+                                    data-category="potions" 
+                                    data-name="Agility Potion" 
+                                    data-effect="Increases speed" 
+                                    data-stat="agility" 
+                                    data-amount="10">
                                     <img src="../assets/images/agility_potion.png" alt="Agility Potion">
                                     <div class="item-tooltip">Agility Potion - Increases speed</div>
                                 </div>
                             </div>
                         </div>
-                    
+
                         <!-- Scrolls Section -->
                         <div class="inventory-category">
                             <h3>Scrolls</h3>
                             <div class="inventory-items">
-                                <div class="inventory-item" data-category="scrolls">
+                                <div class="inventory-item" 
+                                    data-category="scrolls" 
+                                    data-name="Strength Scroll" 
+                                    data-effect="Boosts strength" 
+                                    data-stat="strength" 
+                                    data-amount="10">
                                     <img src="../assets/images/strength_scroll.png" alt="Strength Scroll">
                                     <div class="item-tooltip">Strength Scroll - Boosts strength</div>
                                 </div>
-                                <div class="inventory-item" data-category="scrolls">
+
+                                <div class="inventory-item" 
+                                    data-category="scrolls" 
+                                    data-name="XP Scroll" 
+                                    data-effect="Grants bonus XP" 
+                                    data-stat="xp" 
+                                    data-amount="200">
                                     <img src="../assets/images/xp_scroll.png" alt="XP Scroll">
                                     <div class="item-tooltip">XP Scroll - Grants bonus experience</div>
                                 </div>
                             </div>
                         </div>
-                    
+
                         <!-- Special Items Section -->
                         <div class="inventory-category">
                             <h3>Special Items</h3>
                             <div class="inventory-items">
-                                <div class="inventory-item" data-category="special">
+                                <div class="inventory-item" 
+                                    data-category="special" 
+                                    data-name="Ancient Tome" 
+                                    data-effect="Boosts Intelligence & Agility" 
+                                    data-stat="intelligence,agility" 
+                                    data-amount="10">
                                     <img src="../assets/images/ancient_tome.png" alt="Ancient Tome">
                                     <div class="item-tooltip">Ancient Tome - Boosts Intelligence & Agility</div>
                                 </div>
-                                <div class="inventory-item" data-category="special">
+                        
+                                <div class="inventory-item" 
+                                    data-category="special" 
+                                    data-name="Arcane Gem" 
+                                    data-effect="Enhances Strength & Vitality" 
+                                    data-stat="strength,vitality"  
+                                    data-amount="10">
                                     <img src="../assets/images/arcane_gem.png" alt="Arcane Gem">
                                     <div class="item-tooltip">Arcane Gem - Enhances Strength & Vitality</div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
-                    
                 </div>
-            
             </div>
 
         </section>
 
-    </div> <!-- Closing Main Container -->
+    </div> <!-- End of Main Container -->
+
+    <!-- Confirmation Modal -->
+    <!-- Item Use Confirmation Popup -->
+    <div id="item-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-item-name">Use Item?</h2>
+            <p id="modal-item-description">Are you sure you want to use this?</p>
+            <button id="use-item-btn">Use</button>
+            <button id="cancel-item-btn">Cancel</button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer id="footer">
