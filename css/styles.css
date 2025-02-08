@@ -1317,31 +1317,6 @@ body {
 /* INVENTORY PAGE */
 
 
-/* Debug Borders for Entire Inventory Page */
-#inventory-section {
-    border: 2px solid red !important; /* Outline main inventory container */
-}
-
-#inventory-tabs {
-    border: 2px solid blue !important; /* Tabs container */
-}
-
-#inventory-layout {
-    border: 2px solid green !important; /* Filters + Items layout */
-}
-
-#inventory-filters {
-    border: 2px solid orange !important; /* Sidebar Filters */
-}
-
-#inventory-items {
-    border: 2px solid purple !important; /* Items display grid */
-}
-
-#inventory-tabs-wrapper {
-    border: 2px solid pink !important; /* Tabs container */
-}
-
 
 /* ============================= */
 /* INVENTORY SECTION (STYLES ONLY FOR INVENTORY PAGE) */
@@ -1478,21 +1453,23 @@ body {
 #inventory-layout {
     display: flex; 
     gap: 1.5rem;
-    align-items: flex-start; /* Prevents stretching */
+    align-items: stretch; 
     width: 100%;
     max-width: 100%;
 }
 
 /* Ensure filters stay in a fixed-width sidebar */
 #inventory-filters {
-    width: 13vw; 
+    width: 13vw;
     min-width: 220px;
-    background: #F2F2F2;
+    background: #ddd;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex-shrink: column; 
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; 
+    align-self: stretch; 
 }
 
 /* Ensure checkboxes and labels align properly */
