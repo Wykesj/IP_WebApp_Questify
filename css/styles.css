@@ -634,12 +634,15 @@ body {
     height: 100%;
     background: #34D058;
     border-radius: 10px;
+    transition: width 0.5s ease-in-out;
 }
 
 
 /* STATS CONTAINER */
 .stats {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-direction: column;
     gap: 12px; /* Space between stat bars */
     width: 100%;
@@ -676,11 +679,12 @@ body {
 /* STAT PROGRESS */
 .stat-fill {
     height: 100%;
+    min-width: 5%;
     transition: width 0.3s ease-in-out;
 }
 
 /* STAT VALUE */
-.stat-value {
+#strength-value, #vitality-value, #intelligence-value, #agility-value {
     font-size: 14px;
     font-weight: bold;
     color: white;
@@ -690,10 +694,10 @@ body {
 }
 
 /* INDIVIDUAL STAT COLORS */
-#strength-bar .stat-fill { background: #f2c243; }   
-#vitality-bar .stat-fill { background: #f9312e; }   
-#intelligence-bar .stat-fill { background: #fe63be; } 
-#agility-bar .stat-fill { background: #de7d3f; }   
+#strength-fill { background: #f2c243; }
+#vitality-fill { background: #f9312e; }
+#intelligence-fill { background: #fe63be; }
+#agility-fill { background: #de7d3f; }
 
 /* ============================= */
 /* SEARCH & CONTROLS */

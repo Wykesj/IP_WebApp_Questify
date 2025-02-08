@@ -12,6 +12,98 @@ document.addEventListener("DOMContentLoaded", function () {
     const equipmentTab = document.querySelector(".tab[data-tab='equipment']");
     const sortSelect = document.getElementById("sort-items");
 
+    //Fetch Player Stats
+    //Fetch Player Stats
+    //Fetch Player Stats
+    async function fetchPlayerStats() {
+        try {
+            const { data, error } = await supabaseClient
+                .from("player_stats")
+                .select("*")
+                .limit(1); // Remove `.single()` to avoid 406 error
+            
+            if (error) throw error;
+            if (!data || data.length === 0) {
+                console.error("❌ No player stats found in the database.");
+                return;
+            }
+    
+            console.log("✅ Player Stats Fetched:", data[0]); // Log to confirm data
+            updateStatusScreen(data[0]); // Use data[0] since .single() is removed
+        } catch (err) {
+            console.error("❌ Error Fetching Player Stats:", err.message);
+        }
+    }
+    
+
+    function updateStatusScreen(stats) {
+        const maxXP = 1000;
+        const maxValues = { strength: 100, vitality: 100, intelligence: 100, agility: 100 };
+        const defaultValues = { strength: 47, vitality: 12, intelligence: 35, agility: 22 };
+
+        let updatesNeeded = false;
+
+
+        // Check for XP Level-Up
+        if (stats.xp >= maxXP) {
+            stats.level += 1; // Increase level
+            stats.xp = stats.xp - maxXP; // Carry over excess XP
+            console.log(`Level Up! New Level: ${stats.level}`);
+            updatesNeeded = true;
+        }
+
+
+        // Check for Stat Limits
+        for (let stat in maxValues) {
+            if (stats[stat] > maxValues[stat]) {
+                console.log(`⚠️ ${stat} exceeded max limit! Resetting to default.`);
+                stats[stat] = defaultValues[stat]; // Reset to default value
+                updatesNeeded = true;
+            }
+        }
+    
+        // If any stat was reset, update API with new values
+        if (updatesNeeded) {
+            updatePlayerStats(stats);
+        }
+
+        console.log("XP Value from Supabase:", stats.xp);
+
+        document.getElementById("xp-filled").style.width = `${(stats.xp / 1000) * 100}%`;
+        document.getElementById("xp-value").innerText = `${stats.xp}/1000`;
+    
+        document.getElementById("strength-value").innerText = stats.strength;
+        document.getElementById("vitality-value").innerText = stats.vitality;
+        document.getElementById("intelligence-value").innerText = stats.intelligence;
+        document.getElementById("agility-value").innerText = stats.agility;
+        document.getElementById("user-level").innerText = `${stats.level}`;
+
+        document.getElementById("strength-fill").style.width = `${stats.strength}%`;
+        document.getElementById("vitality-fill").style.width = `${stats.vitality}%`;
+        document.getElementById("intelligence-fill").style.width = `${stats.intelligence}%`;
+        document.getElementById("agility-fill").style.width = `${stats.agility}%`;
+    }    
+
+    fetchPlayerStats();
+
+    //Update Player Stats
+
+    async function updatePlayerStats(updatedStats) {
+        const userId = 1; // Replace with dynamic user ID
+    
+        const { data, error } = await supabaseClient
+            .from("player_stats")
+            .update(updatedStats)
+            .eq("id", userId);
+    
+        if (error) {
+            console.error("❌ Error Updating Player Stats:", error.message);
+        } else {
+            console.log("✅ Player Stats Updated:", data);
+        }
+    }
+    
+
     function sortInventoryItems(criteria) {
         inventoryCategories.forEach(category => {
             const itemsContainer = category.querySelector(".inventory-items");
