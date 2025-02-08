@@ -103,7 +103,6 @@
                     <h3>Filters</h3>
                     <label><input type="checkbox" id="inventory-potions"> Potions</label>
                     <label><input type="checkbox" id="inventory-scrolls"> Scrolls</label>
-                    <label><input type="checkbox" id="inventory-chests"> Chests</label>
                     <label><input type="checkbox" id="inventory-special"> Special Items</label>
                     <label><input type="checkbox" id="equipment-headgear"> Headgear</label>
                     <label><input type="checkbox" id="equipment-body"> Body Armor</label>
@@ -127,8 +126,56 @@
             
                     <!-- Inventory Grid -->
                     <div id="inventory-grid">
-                        <!-- Items will be dynamically inserted here -->
+                        <!-- 🧪 Potions Section -->
+                        <div class="inventory-category">
+                            <h3>Potions</h3>
+                            <div class="inventory-items">
+                                <div class="inventory-item" data-category="potions">
+                                    <img src="../assets/images/vitality_potion.png" alt="Vitality Potion">
+                                    <div class="item-tooltip">Vitality Potion - Restores health</div>
+                                </div>
+                                <div class="inventory-item" data-category="potions">
+                                    <img src="../assets/images/intelligence_potion.png" alt="Intelligence Potion">
+                                    <div class="item-tooltip">Intelligence Potion - Boosts mind power</div>
+                                </div>
+                                <div class="inventory-item" data-category="potions">
+                                    <img src="../assets/images/agility_potion.png" alt="Agility Potion">
+                                    <div class="item-tooltip">Agility Potion - Increases speed</div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Scrolls Section -->
+                        <div class="inventory-category">
+                            <h3>Scrolls</h3>
+                            <div class="inventory-items">
+                                <div class="inventory-item" data-category="scrolls">
+                                    <img src="../assets/images/strength_scroll.png" alt="Strength Scroll">
+                                    <div class="item-tooltip">Strength Scroll - Boosts strength</div>
+                                </div>
+                                <div class="inventory-item" data-category="scrolls">
+                                    <img src="../assets/images/xp_scroll.png" alt="XP Scroll">
+                                    <div class="item-tooltip">XP Scroll - Grants bonus experience</div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Special Items Section -->
+                        <div class="inventory-category">
+                            <h3>Special Items</h3>
+                            <div class="inventory-items">
+                                <div class="inventory-item" data-category="special">
+                                    <img src="../assets/images/ancient_tome.png" alt="Ancient Tome">
+                                    <div class="item-tooltip">Ancient Tome - Boosts Intelligence & Agility</div>
+                                </div>
+                                <div class="inventory-item" data-category="special">
+                                    <img src="../assets/images/arcane_gem.png" alt="Arcane Gem">
+                                    <div class="item-tooltip">Arcane Gem - Enhances Strength & Vitality</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             
             </div>

@@ -1396,9 +1396,9 @@ body {
 /* INVENTORY GRID */
 /* ============================= */
 #inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     width: 100%;
     padding: 1rem;
 }
@@ -1406,13 +1406,19 @@ body {
 /* ============================= */
 /* INVENTORY ITEM CARDS */
 /* ============================= */
+
+/* Inventory Item Box */
 .inventory-item {
-    background: white;
-    padding: 1rem;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.2s;
     position: relative;
+    width: 80px;
+    height: 80px;
+    background: #ffffff; /* White box */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
 }
 
 .inventory-item:hover {
@@ -1420,7 +1426,7 @@ body {
 }
 
 .inventory-item img {
-    width: 5rem;
+    width: 60%;
     height: auto;
 }
 
@@ -1537,7 +1543,7 @@ body {
     padding: 0.5rem;
 }
 
-/* 📱 Tablet & Mobile */
+/* Tablet & Mobile */
 @media (max-width: 1024px) {
     #inventory-layout {
         flex-direction: column; /* Stack Filters & Items */
@@ -1564,4 +1570,46 @@ body {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
+}
+
+
+/* Category Titles (Potions, Scrolls, Special Items) */
+.inventory-category h3 {
+    font-size: 1.4rem;
+    color: #ffffff; /* Matches purple theme */
+    margin-bottom: 0.5rem;
+}
+
+
+/* Inventory Items Layout */
+.inventory-items {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+
+
+/* Tooltip (Hidden by Default) */
+.item-tooltip {
+    position: absolute;
+    bottom: 110%; /* Moves above the item */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Tooltip Appears on Hover */
+.inventory-item:hover .item-tooltip {
+    opacity: 1;
+    visibility: visible;
 }
