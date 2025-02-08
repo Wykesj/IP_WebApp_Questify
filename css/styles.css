@@ -1304,3 +1304,260 @@ body {
         gap: 1rem;
     }
 }
+
+
+
+
+
+
+
+
+/* INVENTORY PAGE */
+/* INVENTORY PAGE */
+/* INVENTORY PAGE */
+
+
+/* Debug Borders for Entire Inventory Page */
+#inventory-section {
+    border: 2px solid red !important; /* Outline main inventory container */
+    background: rgba(255, 0, 0, 0.1); /* Light red tint */
+}
+
+#inventory-tabs {
+    border: 2px solid blue !important; /* Tabs container */
+    background: rgba(0, 0, 255, 0.1);
+}
+
+#inventory-layout {
+    border: 2px solid green !important; /* Filters + Items layout */
+    background: rgba(0, 255, 0, 0.1);
+}
+
+#inventory-filters {
+    border: 2px solid orange !important; /* Sidebar Filters */
+    background: rgba(255, 165, 0, 0.1);
+}
+
+#inventory-items {
+    border: 2px solid purple !important; /* Items display grid */
+    background: rgba(128, 0, 128, 0.1);
+}
+
+#inventory-tabs-wrapper {
+    border: 2px solid pink !important; /* Tabs container */
+    background: rgba(255, 192, 203, 0.1);
+}
+
+
+/* ============================= */
+/* INVENTORY SECTION (STYLES ONLY FOR INVENTORY PAGE) */
+/* ============================= */
+
+#inventory-section {
+    width: 100%; 
+    max-width: 1600px;
+    overflow: hidden;
+}
+
+/* ============================= */
+/* INVENTORY TABS (ITEMS | EQUIPMENT) */
+/* ============================= */
+
+/* Ensure the container stretches full width */
+#inventory-tabs-wrapper {
+    width: 100%; 
+    max-width: 100%; 
+    display: flex;
+    justify-content: center; 
+    background: #E0E0E0; 
+    padding: 0.5rem 0;
+}
+
+/* Make sure buttons are aligned correctly */
+#inventory-tabs {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Individual Tab Buttons */
+.tab {
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Active tab styling */
+.tab.active {
+    background-color: #6200ea;
+    color: white;
+}
+
+
+
+/* ============================= */
+/* INVENTORY GRID */
+/* ============================= */
+#inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+}
+
+/* ============================= */
+/* INVENTORY ITEM CARDS */
+/* ============================= */
+.inventory-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.inventory-item:hover {
+    transform: scale(1.05);
+}
+
+.inventory-item img {
+    width: 5rem;
+    height: auto;
+}
+
+.inventory-item .quantity {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 50%;
+    padding: 0.4rem;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+/* Equipped Items Highlight */
+.inventory-item.equipped {
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+}
+
+/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
+
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+    #inventory-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
+/* Mobile (≤768px) */
+@media (max-width: 768px) {
+    #inventory-tabs {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .tab {
+        width: 100%;
+    }
+
+    .inventory-item img {
+        width: 4rem;
+    }
+}
+
+
+
+#inventory-layout {
+    display: flex; 
+    gap: 1.5rem;
+    align-items: flex-start; /* Prevents stretching */
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Ensure filters stay in a fixed-width sidebar */
+#inventory-filters {
+    width: 13vw; 
+    min-width: 220px;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: column; 
+    gap: 0.5rem;
+}
+
+/* Ensure checkboxes and labels align properly */
+#inventory-filters label {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Space between checkbox and text */
+    font-size: 1rem;
+    margin-bottom: 0.7rem;
+    cursor: pointer;
+}
+
+/* Ensure inventory items take up remaining space */
+#inventory-content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%
+}
+
+#inventory-filters h3 {
+    margin-bottom: 1rem; /* Adjust spacing between title and checkboxes */
+    font-size: 1.2rem; /* Slightly bigger title */
+    font-weight: bold;
+}
+
+#inventory-controls {
+    display: flex;
+    justify-content: flex-end; /* Pushes to the right */
+    align-items: center; 
+    width: 100%; 
+    padding: 0.5rem; /* Adds some spacing */
+}
+
+/* 📱 Tablet & Mobile */
+@media (max-width: 1024px) {
+    #inventory-layout {
+        flex-direction: column; /* Stack Filters & Items */
+        align-items: center;
+    }
+
+    #inventory-filters {
+        width: 100%; /* Full-width on small screens */
+        text-align: center;
+    }
+
+    #inventory-content {
+        flex-direction: column; /* Stack items */
+        align-items: center;
+    }
+
+    #inventory-controls {
+        width: 100%; /* Fix sorting dropdown alignment */
+        text-align: center;
+    }
+
+    #inventory-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}

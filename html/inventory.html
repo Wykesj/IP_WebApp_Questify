@@ -24,16 +24,12 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="inventory.html" class="active">Inventory</a></li>
                     <li><a href="quests.html">Quests</a></li>
-                    <li><a href="leaderboard.html">Leaderboard</a></li>
-                    <li><a href="achievements.html">Achievements</a></li>
-                    <li><a href="profile.html">Profile</a></li>
                 </ul>
             </nav>
         </div>
 
-        <main id="dashboard"> <!-- Keeps layout aligned -->
-
-            <!-- Sidebar (Left) -->
+        <!-- ✅ DASHBOARD (SIDEBAR + STATUS SCREEN) -->
+        <main id="dashboard">
             <aside id="sidebar">
                 <div id="streak-indicator">
                     <p id="streak-text">🔥Streak: <span id="streak-count">3</span> Days</p>
@@ -42,8 +38,7 @@
                     <img src="../assets/images/aigenpfp.webp" alt="Character Avatar">
                 </div>
             </aside>
-        
-            <!-- Status Screen (Middle) -->
+
             <section id="status-screen">
                 <div id="user-info">
                     <h2 id="username">Nick Valor</h2>
@@ -88,32 +83,37 @@
                     </div>
                 </div>
             </section>
+        </main> <!-- Closes the `#dashboard` section -->
 
-            <!-- Inventory Section (Main) -->
-            <section id="inventory-section">
-                
-                <!-- Inventory Tabs -->
+        <!-- INVENTORY SECTION -->
+        <section id="inventory-section">
+            
+            <!-- Inventory Tabs -->
+            <div id="inventory-tabs-wrapper">
                 <div id="inventory-tabs">
                     <button class="tab active" data-tab="items">Items</button>
                     <button class="tab" data-tab="equipment">Equipment</button>
                 </div>
+            </div>
 
-                <div id="inventory-layout">
-                    
-                    <!-- Filters Sidebar -->
-                    <aside id="inventory-filters">
-                        <h3>Filters</h3>
-                        <label><input type="checkbox" id="inventory-potions"> Potions</label>
-                        <label><input type="checkbox" id="inventory-scrolls"> Scrolls</label>
-                        <label><input type="checkbox" id="inventory-chests"> Chests</label>
-                        <label><input type="checkbox" id="inventory-special"> Special Items</label>
-                        <label><input type="checkbox" id="equipment-headgear"> Headgear</label>
-                        <label><input type="checkbox" id="equipment-body"> Body Armor</label>
-                        <label><input type="checkbox" id="equipment-boots"> Boots</label>
-                        <label><input type="checkbox" id="equipment-weapons"> Weapons</label>
-                        <label><input type="checkbox" id="equipment-accessory"> Accessories</label>
-                    </aside>
-
+            <div id="inventory-layout">
+                
+                <!-- Filters Sidebar -->
+                <aside id="inventory-filters">
+                    <h3>Filters</h3>
+                    <label><input type="checkbox" id="inventory-potions"> Potions</label>
+                    <label><input type="checkbox" id="inventory-scrolls"> Scrolls</label>
+                    <label><input type="checkbox" id="inventory-chests"> Chests</label>
+                    <label><input type="checkbox" id="inventory-special"> Special Items</label>
+                    <label><input type="checkbox" id="equipment-headgear"> Headgear</label>
+                    <label><input type="checkbox" id="equipment-body"> Body Armor</label>
+                    <label><input type="checkbox" id="equipment-boots"> Boots</label>
+                    <label><input type="checkbox" id="equipment-weapons"> Weapons</label>
+                    <label><input type="checkbox" id="equipment-accessory"> Accessories</label>
+                </aside>
+            
+                <!-- New Wrapper for Sorting & Items Grid -->
+                <div id="inventory-content">
                     <!-- Inventory Controls (Sorting) -->
                     <div id="inventory-controls">
                         <label for="sort-items">Sort By:</label>
@@ -122,16 +122,16 @@
                             <option value="alphabetical">A-Z</option>
                         </select>
                     </div>
-
+            
                     <!-- Inventory Grid -->
                     <div id="inventory-grid">
                         <!-- Items will be dynamically inserted here -->
                     </div>
-
                 </div>
-            </section>
+            
+            </div>
 
-        </main>
+        </section>
 
     </div> <!-- Closing Main Container -->
 
