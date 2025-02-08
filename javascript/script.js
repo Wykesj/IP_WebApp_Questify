@@ -1,10 +1,75 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    // ✅ Initialize Supabase
-    const SUPABASE_URL = "https://ficxsnnbjzskugtblrfw.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpY3hzbm5ianpza3VndGJscmZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MTIzODksImV4cCI6MjA1NDM4ODM4OX0.BcwzBOYhxIj-kbpnpRGp-1Ekf4tjpiFoVfKOujbhFfM";
+const SUPABASE_URL = "https://ficxsnnbjzskugtblrfw.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpY3hzbm5ianpza3VndGJscmZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MTIzODksImV4cCI6MjA1NDM4ODM4OX0.BcwzBOYhxIj-kbpnpRGp-1Ekf4tjpiFoVfKOujbhFfM";
     
-    const { createClient } = supabase;
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+const { createClient } = supabase;
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Fetch Player Stats (Shared for All Pages)
+async function fetchPlayerStats() {
+    try {
+        const { data, error } = await supabaseClient
+            .from("player_stats")
+            .select("*")
+            .eq("id", 1) 
+            .single();
+
+        if (error) throw error;
+
+        console.log("✅ Player Stats Fetched:", data);
+        updateStatusScreen(data);
+    } catch (err) {
+        console.error("❌ Error Fetching Player Stats:", err.message);
+    }
+}
+
+// Update Status Screen UI (Shared for All Pages)
+function updateStatusScreen(stats) {
+    const maxXP = 1000;
+    const maxValues = { strength: 100, vitality: 100, intelligence: 100, agility: 100 };
+    const defaultValues = { strength: 47, vitality: 12, intelligence: 35, agility: 22 };
+
+    let updatesNeeded = false;
+
+    // Check for XP Level-Up
+    if (stats.xp >= maxXP) {
+        stats.level += Math.floor(stats.xp / maxXP); // Increase level correctly
+        stats.xp = stats.xp % maxXP; // Carry over excess XP
+        updatesNeeded = true;
+    }
+
+    // Check for Stat Limits
+    for (let stat in maxValues) {
+        if (stats[stat] > maxValues[stat]) {
+            stats[stat] = defaultValues[stat]; // Reset to default
+            updatesNeeded = true;
+        }
+    }
+
+    // If stats were adjusted, update Supabase
+    if (updatesNeeded) {
+        updatePlayerStats(stats);
+    }
+
+    // Update XP Bar
+    document.getElementById("xp-filled").style.width = `${(stats.xp / maxXP) * 100}%`;
+    document.getElementById("xp-value").innerText = `${stats.xp}/${maxXP}`;
+
+    // Update Stats Values
+    document.getElementById("strength-value").innerText = stats.strength;
+    document.getElementById("vitality-value").innerText = stats.vitality;
+    document.getElementById("intelligence-value").innerText = stats.intelligence;
+    document.getElementById("agility-value").innerText = stats.agility;
+    document.getElementById("user-level").innerText = `${stats.level}`;
+
+    // Update Stats Bar Widths
+    document.getElementById("strength-fill").style.width = `${stats.strength}%`;
+    document.getElementById("vitality-fill").style.width = `${stats.vitality}%`;
+    document.getElementById("intelligence-fill").style.width = `${stats.intelligence}%`;
+    document.getElementById("agility-fill").style.width = `${stats.agility}%`;
+}
+
+
+document.addEventListener("DOMContentLoaded", async function () {
 
     try {
         const { data, error } = await supabaseClient.from("tasks").select("*").limit(1); 
@@ -14,6 +79,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("❌ Supabase connection failed:", err.message);
     }
 
+    fetchPlayerStats();
 
     // Load Tasks from Supabase
     async function loadTasks() {

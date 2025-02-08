@@ -179,7 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("agility-fill").style.width = `${stats.agility}%`;
     }    
 
-    fetchPlayerStats();
 
     //Update Player Stats
 
