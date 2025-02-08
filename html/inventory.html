@@ -31,7 +31,7 @@
             </nav>
         </div>
 
-        <main id="dashboard"> <!-- Changed from inventory-dashboard to dashboard -->
+        <main id="dashboard"> <!-- Keeps layout aligned -->
 
             <!-- Sidebar (Left) -->
             <aside id="sidebar">
@@ -88,10 +88,50 @@
                     </div>
                 </div>
             </section>
-        
-            <!-- Inventory Section -->
-            
-        
+
+            <!-- Inventory Section (Main) -->
+            <section id="inventory-section">
+                
+                <!-- Inventory Tabs -->
+                <div id="inventory-tabs">
+                    <button class="tab active" data-tab="items">Items</button>
+                    <button class="tab" data-tab="equipment">Equipment</button>
+                </div>
+
+                <div id="inventory-layout">
+                    
+                    <!-- Filters Sidebar -->
+                    <aside id="inventory-filters">
+                        <h3>Filters</h3>
+                        <label><input type="checkbox" id="inventory-potions"> Potions</label>
+                        <label><input type="checkbox" id="inventory-scrolls"> Scrolls</label>
+                        <label><input type="checkbox" id="inventory-chests"> Chests</label>
+                        <label><input type="checkbox" id="inventory-special"> Special Items</label>
+                        <label><input type="checkbox" id="equipment-headgear"> Headgear</label>
+                        <label><input type="checkbox" id="equipment-body"> Body Armor</label>
+                        <label><input type="checkbox" id="equipment-boots"> Boots</label>
+                        <label><input type="checkbox" id="equipment-weapons"> Weapons</label>
+                        <label><input type="checkbox" id="equipment-accessory"> Accessories</label>
+                    </aside>
+
+                    <!-- Inventory Controls (Sorting) -->
+                    <div id="inventory-controls">
+                        <label for="sort-items">Sort By:</label>
+                        <select id="sort-items">
+                            <option value="rarity">Rarity</option>
+                            <option value="alphabetical">A-Z</option>
+                        </select>
+                    </div>
+
+                    <!-- Inventory Grid -->
+                    <div id="inventory-grid">
+                        <!-- Items will be dynamically inserted here -->
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
 
     </div> <!-- Closing Main Container -->
 
@@ -99,6 +139,18 @@
     <footer id="footer">
         <p>&copy; 2025 Questify. All rights reserved.</p>
     </footer>
+
+    <!-- Item Modal (For Using/Equipping) -->
+    <div id="item-modal" class="hidden">
+        <div class="modal-content">
+            <h2 id="modal-item-name">Item Name</h2>
+            <img id="modal-item-image" src="" alt="Item">
+            <p id="modal-item-description">Item description goes here.</p>
+            <button id="use-item-btn">Use</button>
+            <button id="equip-item-btn">Equip</button>
+            <button id="close-modal">Close</button>
+        </div>
+    </div>
 
     <script src="../javascript/inventory.js"></script>
 </body>
