@@ -1320,32 +1320,26 @@ body {
 /* Debug Borders for Entire Inventory Page */
 #inventory-section {
     border: 2px solid red !important; /* Outline main inventory container */
-    background: rgba(255, 0, 0, 0.1); /* Light red tint */
 }
 
 #inventory-tabs {
     border: 2px solid blue !important; /* Tabs container */
-    background: rgba(0, 0, 255, 0.1);
 }
 
 #inventory-layout {
     border: 2px solid green !important; /* Filters + Items layout */
-    background: rgba(0, 255, 0, 0.1);
 }
 
 #inventory-filters {
     border: 2px solid orange !important; /* Sidebar Filters */
-    background: rgba(255, 165, 0, 0.1);
 }
 
 #inventory-items {
     border: 2px solid purple !important; /* Items display grid */
-    background: rgba(128, 0, 128, 0.1);
 }
 
 #inventory-tabs-wrapper {
     border: 2px solid pink !important; /* Tabs container */
-    background: rgba(255, 192, 203, 0.1);
 }
 
 
@@ -1368,8 +1362,7 @@ body {
     width: 100%; 
     max-width: 100%; 
     display: flex;
-    justify-content: center; 
-    background: #E0E0E0; 
+    justify-content: center;  
     padding: 0.5rem 0;
 }
 
@@ -1488,7 +1481,7 @@ body {
 #inventory-filters {
     width: 13vw; 
     min-width: 220px;
-    background: white;
+    background: #F2F2F2;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -1511,7 +1504,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-grow: 1;
-    background: white;
+    background: #5A40E3;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -1525,12 +1518,23 @@ body {
     font-weight: bold;
 }
 
-#inventory-controls {
+
+#inventory-sort-wrapper {
     display: flex;
     justify-content: flex-end; /* Pushes to the right */
     align-items: center; 
     width: 100%; 
     padding: 0.5rem; /* Adds some spacing */
+}
+
+
+#inventory-controls {
+    background: #FFFFFF;
+    border: 2px solid #C0C0C0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center; 
+    padding: 0.5rem;
 }
 
 /* 📱 Tablet & Mobile */
