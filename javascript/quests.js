@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (hp === 0 && !bossDefeated) {
             bossDefeated = true;
+            logAction("🔥 You defeated the Twilight Dragon!");
             playBossDefeatAnimation();
         } else if (hp > 0) {
             bossDefeated = false;
@@ -112,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // Play Lottie Boss Defeat Animation
-    function playBossDefeatAnimation() {
+    async function playBossDefeatAnimation() {
         return new Promise((resolve) => {
             console.log("🎉 Playing Boss Defeat Animation...");
     
@@ -138,6 +139,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     
                 // ✅ Reset Boss HP
                 await resetBossHP();
+                
+                // 🔹 Reset Quest Buttons After Boss Defeat
+                resetQuests(); // ✅ This will reset buttons and text
     
                 resolve();
             });
@@ -178,37 +182,60 @@ document.addEventListener("DOMContentLoaded", async function () {
     questButtons.forEach((button) => {
         button.addEventListener("click", async function () {
             const damage = parseInt(button.getAttribute("data-damage"));
-
+            const questText = this.parentElement.querySelector("p"); // Selects the quest text
+    
+            // Strike-through quest text and grey out button
+            questText.style.textDecoration = "line-through";
+            this.style.backgroundColor = "#A9A9A9"; // Grey out the button
+            this.style.pointerEvents = "none"; // Prevent further clicks until reset
+    
             await playLottieComplete();
-
+    
+            // Fetch Current HP
             const { data, error } = await supabaseClient
                 .from("boss_status")
                 .select("id, hp, max_hp")
                 .limit(1)
                 .single();
-
+    
             if (error) {
                 console.error("Error fetching HP:", error);
                 return;
             }
-
+    
             let newHp = Math.max(0, data.hp - damage);
-
+    
+            // Update Supabase
             const { error: updateError } = await supabaseClient
                 .from("boss_status")
                 .update({ hp: newHp })
                 .eq("id", data.id);
-
+    
             if (updateError) {
                 console.error("Error updating HP:", updateError);
                 return;
             }
-
+    
             updateBossUI(newHp, data.max_hp);
             logAction(`You dealt ${damage} damage to Twilight Dragon.`);
+    
             await fetchBossHP();
         });
     });
+    
+    // Reset all quest buttons after boss is defeated
+    function resetQuests() {
+        questButtons.forEach((button) => {
+            const questText = button.parentElement.querySelector("p");
+
+            // Reset text style
+            questText.style.textDecoration = "none";
+
+            // Reset button color & allow clicking again
+            button.style.backgroundColor = "#4CAF50"; // Green color
+            button.style.pointerEvents = "auto";
+        });
+    }
 
     // Log Actions in Battle Log
     function logAction(message) {
