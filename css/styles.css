@@ -1777,8 +1777,8 @@ body {
 
 /* QUEST PAGE CONTAINER */
 #quest-container {
-    max-width: 1600px;
-    margin: 0 auto; 
+    max-width: 90vw;
+    margin: 0 auto;
 }
 
 /* Main container for Quest Page */
@@ -1787,17 +1787,16 @@ body {
     justify-content: space-between;
     align-items: stretch;
     width: 100%;
-    max-width: 1600px;
+    max-width: 1600px; /* Keep original max-width */
     margin: 2vh auto;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     gap: 2rem;
 }
-
 
 /* QUESTBOSS SECTION (LEFT) */
 #questboss-section {
     flex: 0.7;
-    min-width: 300px;
+    min-width: 300px; /* Keep original minimum size */
     max-width: 25vw;
     background: #333;
     color: white;
@@ -1814,7 +1813,8 @@ body {
 /* Boss Image */
 #boss-image {
     width: 80%;
-    max-height: 25vh;
+    max-width: 25vw; 
+    height: auto;
     margin-bottom: 1.5rem;
 }
 
@@ -1824,7 +1824,7 @@ body {
     height: 2vh;
     background: red;
     border-radius: 1rem;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     margin-top: 1.5rem;
     position: relative;
     overflow: hidden;
@@ -1837,14 +1837,51 @@ body {
     transition: width 0.5s ease-in-out;
 }
 
+@media (max-width: 1024px) {
+    #boss-dashboard {
+        flex-direction: column;
+        align-items: center;
+        max-width: 95vw;
+    }
+
+    #questboss-section {
+        max-width: 60vw; /* Keep scaling similar */
+        padding: 1.5rem;
+    }
+
+    #boss-hp-bar {
+        height: 1.5vh; /* Keep HP bar proportional */
+    }
+
+    #boss-image {
+        max-width: 50vw;
+    }
+}
+
+/* 🔹 Responsive for Mobile */
+@media (max-width: 768px) {
+    #questboss-section {
+        max-width: 85vw;
+        padding: 1.2rem;
+    }
+
+    #boss-hp-bar {
+        height: 1.2vh;
+    }
+
+    #boss-image {
+        max-width: 70vw;
+    }
+}
+
 /* QUEST SECTION (RIGHT) */
 #quest-section {
     flex: 2.3;
-    min-width: 500px;
+    min-width: 30vw; /* Dynamic width */
     max-width: 60vw;
     background: #5A40E3;
     color: black;
-    padding: 2rem 2rem;
+    padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
 }
@@ -1890,20 +1927,77 @@ body {
 .complete-btn {
     background: #4CAF50;
     color: white;
+    font-weight: bold;
     border: none;
-    padding: 0.8rem 1.5rem;
-    cursor: pointer;
+    padding: 0.8rem 1.2rem;
     border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
     font-size: 1rem;
-    transition: background 0.3s;
-    font-weight: bold
+}
+
+
+@media (max-width: 1024px) {
+    
+    #quest-section {
+        max-width: 70vw;
+        padding: 1.5rem;
+    }
+
+    .quest {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    .complete-btn {
+        padding: 1rem;
+        font-size: 1.1rem;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
+/* 🔹 Responsive for Mobile */
+@media (max-width: 768px) {
+    #quest-section {
+        max-width: 90vw;
+        padding: 1.2rem;
+    }
+
+    #quest-list li {
+        margin-bottom: 1rem;
+    }
+
+    .quest {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.8rem;
+    }
+
+    .quest button {
+        width: 100%; /* Make button full width for mobile */
+        margin-top: 0.5rem;
+    }
+
+    .complete-btn {
+        font-size: 1rem;
+        padding: 1rem;
+        width: 100%; /* Make buttons full width */
+        text-align: center;
+    }
+    .quest p {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
 }
 
 .complete-btn:hover {
     background: #388E3C;
+    transform: scale(1.05);
 }
 
-/* BATTLE LOG (FULL WIDTH BELOW) */
+/* BATTLE LOG */
 #battle-log {
     width: 100%;
     max-width: 1600px;
@@ -1956,38 +2050,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 📱 MOBILE & TABLET RESPONSIVENESS */
-@media (max-width: 1024px) {
-    #boss-dashboard {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #questboss-section, #quest-section {
-        max-width: 90vw;
-    }
-}
-
-@media (max-width: 600px) {
-    #boss-dashboard {
-        width: 95vw;
-        gap: 1rem;
-    }
-
-    #questboss-section, #quest-section {
-        padding: 1.5rem;
-        max-width: 95vw;
-    }
-
-    #battle-log {
-        width: 95vw;
-    }
-
-    .complete-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-    }
-}
 
 
 /* 🔹 Dark Overlay for Quest Completion */
