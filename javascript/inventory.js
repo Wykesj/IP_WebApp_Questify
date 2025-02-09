@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const SUPABASE_URL = "https://ficxsnnbjzskugtblrfw.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpY3hzbm5ianpza3VndGJscmZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MTIzODksImV4cCI6MjA1NDM4ODM4OX0.BcwzBOYhxIj-kbpnpRGp-1Ekf4tjpiFoVfKOujbhFfM";
-
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const filterCheckboxes = document.querySelectorAll("#inventory-filters input[type='checkbox']");
     const inventoryItems = document.querySelectorAll(".inventory-item");
