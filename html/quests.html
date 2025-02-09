@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questify - Inventory</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="container">  <!-- Main Container -->
+
+        <!-- Top Bar (Logo + Navigation) -->
+        <div id="top-bar">
+            <div id="logo">
+                <img src="../assets/logo/QuestifyLogoWhiteNoText.svg" alt="Questify Logo">
+            </div>
+
+            <nav id="navbar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="inventory.html" class="active">Inventory</a></li>
+                    <li><a href="quests.html">Quests</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- DASHBOARD (SIDEBAR + STATUS SCREEN) -->
+        <main id="dashboard">
+            <aside id="sidebar">
+                <div id="streak-indicator">
+                    <p id="streak-text">🔥Streak: <span id="streak-count">3</span> Days</p>
+                </div>
+                <div id="character-picture">
+                    <img src="../assets/images/aigenpfp.webp" alt="Character Avatar">
+                </div>
+            </aside>
+
+            <section id="status-screen">
+                <div id="user-info">
+                    <h2 id="username">Nick Valor</h2>
+                    <p>Level <span id="user-level">37</span></p>
+                </div>
+            
+                <!-- XP Progress Bar -->
+                <div id="xp-container">
+                    <span id="xp-label">XP</span>
+                    <div id="xp-bar">
+                        <div id="xp-unfilled"></div>
+                        <div id="xp-filled" style="width: 50%;"></div> 
+                    </div>
+                    <span id="xp-value">500/1000</span>
+                </div>
+            
+                <!-- Stats Bars -->
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-name">Strength</span>
+                        <div class="stat-bar">
+                            <div id="strength-fill" class="stat-fill" style="width: 47%;"></div> 
+                        </div>
+                        <span id="strength-value">47</span>
+                    </div>
+                    
+                    <div class="stat">
+                        <span class="stat-name">Vitality</span>
+                        <div class="stat-bar">
+                            <div id="vitality-fill" class="stat-fill" style="width: 12%;"></div>
+                        </div>
+                        <span id="vitality-value">12</span>
+                    </div>
+            
+                    <div class="stat">
+                        <span class="stat-name">Intelligence</span>
+                        <div class="stat-bar">
+                            <div id="intelligence-fill" class="stat-fill" style="width: 35%;"></div> 
+                        </div>
+                        <span id="intelligence-value">35</span>
+                    </div>
+            
+                    <div class="stat">
+                        <span class="stat-name">Agility</span>
+                        <div class="stat-bar">
+                            <div id="agility-fill" class="stat-fill" style="width: 22%;"></div> 
+                        </div>
+                        <span id="agility-value">22</span>
+                    </div>
+                </div>
+            </section>
+            
+        </main> 
+
+        <!-- Quests Section -->
+
+    </div> 
+
+    <!-- Footer -->
+    <footer id="footer">
+        <p>&copy; 2025 Questify. All rights reserved.</p>
+    </footer>
+
+
+    <script src="../javascript/script.js"></script>
+    <script src="../javascript/inventory.js"></script>
+</body>
+</html>
