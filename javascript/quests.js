@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     let bossDefeated = false;
-    window.defeatLottie = null; // ✅ Now accessible globally in the console
+    window.defeatLottie = null; // Now accessible globally in the console
 
-    // ✅ Define window-scoped Lottie elements
+    // Define window-scoped Lottie elements
     window.lottieDefeatOverlay = document.getElementById("lottie-boss-defeat-overlay");
     window.lottieDefeatModal = document.getElementById("lottie-boss-defeat-modal");
     window.lottieDefeatContainer = document.getElementById("lottie-boss-defeat-animation");
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         path: "../assets/lotties/victory.json"
     });
 
-    console.log("✅ Defeat Lottie Initialized:", window.defeatLottie);
+    console.log("Defeat Lottie Initialized:", window.defeatLottie);
 
     // Fetch Boss HP on Load
     async function fetchBossHP() {
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         supabaseClient
             .channel("realtime:boss_status")
             .on("postgres_changes", { event: "UPDATE", schema: "public", table: "boss_status" }, (payload) => {
-                console.log("🔄 Realtime Update:", payload);
+                console.log("Realtime Update:", payload);
                 if (payload.new) {
                     updateBossUI(payload.new.hp, payload.new.max_hp);
                 }
@@ -115,38 +115,53 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Play Lottie Boss Defeat Animation
     async function playBossDefeatAnimation() {
         return new Promise((resolve) => {
-            console.log("🎉 Playing Boss Defeat Animation...");
-        
-            // ✅ Show the modal
-            lottieDefeatOverlay.style.display = "block";
-            lottieDefeatModal.style.display = "flex";
-            lottieDefeatContainer.style.display = "block";
-        
-            // ✅ Ensure animation resets before playing
-            defeatLottie.goToAndStop(0);
-        
+            console.log("Boss Defeated! Preparing Victory Animation...");
+    
+            // delay before showing the victory modal
             setTimeout(() => {
-                console.log("▶️ Playing Victory Animation...");
-                defeatLottie.goToAndPlay(0, true);
-            }, 100);
-        
+                console.log("Showing Victory Modal...");
+                lottieDefeatOverlay.style.display = "block";
+                lottieDefeatModal.style.display = "flex";
+                lottieDefeatContainer.style.display = "block";
+    
+                // Reset animation before playing
+                defeatLottie.goToAndStop(0);
+    
+                setTimeout(() => {
+                    console.log("Playing Victory Animation...");
+                    defeatLottie.goToAndPlay(0, true);
+                }, 100);
+            }, 500); // delay before the modal appears
+    
             defeatLottie.addEventListener("complete", async () => {
-                console.log("🎬 Boss Defeat Animation Completed.");
-        
-                // ✅ Hide modal
-                lottieDefeatOverlay.style.display = "none";
-                lottieDefeatModal.style.display = "none";
+                console.log("Victory Animation Completed. Closing Modal...");
     
-                // ✅ Reset Boss HP in Supabase
-                await resetBossHP();
-                
-                // ✅ Grant 1000 XP before resetting quests
-                await handleBossDefeatRewards();  
+                // delay AFTER animation completes before closing the modal
+                setTimeout(() => {
+                    lottieDefeatOverlay.style.display = "none";
+                    lottieDefeatModal.style.display = "none";
     
-                // ✅ Reset Quest Buttons After Boss Defeat
-                resetQuests(); // This will reset buttons and text
+                    console.log("Modal Closed. Now Updating XP...");
     
-                resolve();
+                    // Now update XP AFTER modal closes
+                    handleBossDefeatRewards().then(async () => {
+                        console.log("XP Updated!");
+    
+                        // 1-second delay AFTER XP updates before resetting Boss HP & Quests
+                        setTimeout(async () => {
+                            console.log("⏳ Resetting Boss HP & Quests...");
+    
+                            // Reset Boss HP
+                            await resetBossHP();
+    
+                            // Reset Quest Buttons
+                            resetQuests();
+    
+                            console.log("Boss HP & Quests Reset.");
+                            resolve();
+                        }, 1000); // delay after XP update
+                    });
+                }, 300); // delay AFTER animation completes before closing the modal
             });
         });
     }
@@ -174,8 +189,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     
             if (updateError) throw updateError;
     
-            console.log("✅ Boss HP reset to 100.");
-            bossDefeated = false; // 🔹 Reset boss defeated state here
+            console.log("Boss HP reset to 100.");
+            bossDefeated = false; // Reset boss defeated state here
             fetchBossHP();
         } catch (err) {
             console.error("❌ Error resetting boss HP:", err.message);
@@ -246,18 +261,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function handleBossDefeatRewards() {
         try {
-            console.log("🏆 Granting rewards for defeating the boss...");
+            console.log("Granting rewards for defeating the boss...");
     
-            // ✅ Use inventory.js function to add XP & update UI
-            await useItem("xp", 600); // Grants 1000 XP using inventory.js logic
+            // Use inventory.js function to add XP & update UI
+            await useItem("xp", 800); // Grants 1000 XP using inventory.js logic
     
-            console.log("✅ XP granted and UI updated via inventory.js");
+            console.log("XP granted and UI updated via inventory.js");
     
-            // ✅ Ensure UI updates correctly after XP is added
+            // Ensure UI updates correctly after XP is added
             await fetchPlayerStats();
     
         } catch (err) {
-            console.error("❌ Error handling boss defeat rewards:", err.message);
+            console.error("Error handling boss defeat rewards:", err.message);
         }
     }
     

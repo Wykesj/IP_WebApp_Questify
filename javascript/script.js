@@ -15,7 +15,7 @@ async function fetchPlayerStats() {
 
         if (error) throw error;
 
-        console.log("✅ Player Stats Fetched:", data);
+        console.log("Player Stats Fetched:", data);
         updateStatusScreen(data);
     } catch (err) {
         console.error("❌ Error Fetching Player Stats:", err.message);
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <p>${task.title}</p>
                 `;
                 
-                // ✅ Initialize Lottie Animation for the new checkbox
+                // Initialize Lottie Animation for the new checkbox
                 setTimeout(() => {
                     let container = taskCard.querySelector(".checkbox-container");
                     let animation = lottie.loadAnimation({
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         path: "../assets/lotties/Checkbox.json"
                     });
         
-                    // ✅ Apply the same resizing logic used in initial script
+                    // Apply the same resizing logic used in initial script
                     animation.addEventListener("DOMLoaded", function () {
                         container.style.transform = "scale(2.2)"; // Ensure it scales like others
                         container.parentElement.style.overflow = "hidden";
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 if (taskData) {
                     console.log("📌 Opening modal for:", taskType, taskData);
                     
-                    // ✅ Open the modal in edit mode
+                    // Open the modal in edit mode
                     openEditModal(taskType, taskData);
                 }
             });
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const createBtn = modal.querySelector(".create-btn");
             if (createBtn) createBtn.remove();
 
-            // ✅ Ensure "Save Changes" button is added if missing
+            // Ensure "Save Changes" button is added if missing
             const modalFooter = modal.querySelector(".modal-footer");
 
             // Check if "Save" button already exists
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 saveBtn.id = `save-${type}`;
                 saveBtn.textContent = "Save Changes";
                 
-                // ✅ Add event listener to handle saving the task
+                // Add event listener to handle saving the task
                 saveBtn.addEventListener("click", async function() {
                     console.log("🛠 Saving task...");
                 
@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     console.log("📤 Sending updated task data:", updatedTask);
                 
                     const result = await updateTask(task.id, updatedTask);
-                    console.log("✅ Update result:", result);
+                    console.log("Update result:", result);
                 
                     if (result) {
                         console.log("✅ Task updated successfully!");
@@ -511,7 +511,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         
                 const type = this.getAttribute("data-type"); // Get the type (habit, daily, todo)
         
-                // ✅ Ensure correct modal is used
+                // Ensure correct modal is used
                 const modal = document.getElementById(
                     type === "habit" ? "habit-modal" :
                     type === "daily" ? "daily-modal" :
@@ -577,7 +577,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
         }
 
-        // ✅ Setup Modals
+        // Setup Modals
         setupModal("habit", "habit-modal", "close-habit-modal", "cancel-habit", "habit-title", "create-habit");
         setupModal("daily", "daily-modal", "close-daily-modal", "cancel-daily", "daily-title", "create-daily");
         setupModal("todo", "todo-modal", "close-todo-modal", "cancel-todo", "todo-title", "create-todo");
@@ -586,7 +586,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             ['habit', 'daily', 'todo'].forEach(type => {
                 let createBtn = document.getElementById(`create-${type}`);
         
-                // ✅ Clone button to remove all previous event listeners
+                // Clone button to remove all previous event listeners
                 let newCreateBtn = createBtn.cloneNode(true);
                 createBtn.replaceWith(newCreateBtn);
         
@@ -689,7 +689,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         function setupTaskSubmissionListeners() {
             document.querySelectorAll(".create-btn").forEach(createBtn => {
-                // ✅ Clone button to remove existing event listeners
+                // Clone button to remove existing event listeners
                 let newCreateBtn = createBtn.cloneNode(true);
                 createBtn.replaceWith(newCreateBtn);
         
