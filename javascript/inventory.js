@@ -34,13 +34,47 @@ document.addEventListener("DOMContentLoaded", function () {
         itemModal.classList.add("hidden"); // Hide modal on cancel
     });
 
+
+    let itemUseAnimation = lottie.loadAnimation({
+        container: document.getElementById("lottie-animation"), 
+        renderer: "svg",
+        loop: false, 
+        autoplay: false, 
+        path: "../assets/lotties/use.json" 
+    });
+    
+    function playItemAnimation() {
+        const overlay = document.getElementById("lottie-overlay");
+        const modal = document.getElementById("lottie-modal");
+    
+        overlay.style.display = "block";  // Show overlay
+        modal.style.display = "flex";  // Show modal (MUST be flex to center Lottie)
+    
+        itemUseAnimation.goToAndPlay(0, true);
+    
+        setTimeout(() => {
+            overlay.style.display = "none";  
+            modal.style.display = "none";  // Hide after animation ends
+        }, 2000); // Adjust based on animation length
+    }
+    
+    
+
     useItemBtn.addEventListener("click", function () {
         if (selectedItem) {
             const statToIncrease = selectedItem.getAttribute("data-stat");
             const increaseAmount = parseInt(selectedItem.getAttribute("data-amount"));
-
-            useItem(statToIncrease, increaseAmount);
+    
+            // Immediately Hide the Modal
             itemModal.classList.add("hidden");
+    
+            
+            playItemAnimation();
+    
+            
+            setTimeout(() => {
+                useItem(statToIncrease, increaseAmount);
+            }, 2000); 
         }
     });
 

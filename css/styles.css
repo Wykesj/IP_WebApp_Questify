@@ -1698,3 +1698,49 @@ body {
         text-align: center;
     }
 }
+
+.hidden {
+    display: none; 
+}
+
+/* Dark overlay for background dimming */
+#lottie-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    z-index: 998;
+    display: none; /* Ensure overlay is hidden by default */
+}
+
+/* White box for animation */
+#lottie-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 450px;
+    height: 450px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+
+    display: none; /* Ensure it starts hidden */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Lottie animation container */
+#lottie-animation {
+    width: 350px;  
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
