@@ -162,6 +162,11 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
     function updateStatusScreen(stats) {
+        if (!stats || Object.keys(stats).length === 0) {
+            console.warn("⚠️ Skipping updateStatusScreen() - No valid stats received.");
+            return; // Prevent running with empty or missing data
+        }
+
         const maxXP = 1000;
         const maxValues = { strength: 100, vitality: 100, intelligence: 100, agility: 100 };
         const defaultValues = { strength: 47, vitality: 12, intelligence: 35, agility: 22 };
@@ -315,4 +320,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial States
     filterInventory();
     toggleFilters("items"); // Default to Items tab
+
+    fetchPlayerStats()
 });
