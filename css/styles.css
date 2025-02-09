@@ -436,7 +436,7 @@ body {
     color: #ffcc00;
 }
 
-/* 📱 Mobile Adjustments (≤767px) */
+/* Mobile Adjustment (≤767px) */
 @media (max-width: 767px) {
     #top-bar {
         flex-direction: column; /* Stack items vertically */
@@ -474,7 +474,7 @@ body {
     margin-top: 2vh; 
 }
 
-/* 📱 Mobile Fix: Stack Sidebar & Content Vertically */
+/* Mobile Fix: Stack Sidebar & Content Vertically */
 @media (max-width: 767px) {
     #dashboard {
         grid-template-columns: 1fr; /* Stacks everything vertically */
@@ -516,7 +516,7 @@ body {
     flex-wrap: wrap; /* Ensures it wraps instead of overflowing */
 }
 
-/* 📱 Mobile Adjustment */
+/* Mobile Adjustment */
 @media (max-width: 767px) {
     #streak-indicator {
         padding: 1rem; /* Slightly bigger padding for better spacing */
@@ -574,7 +574,7 @@ body {
     color: #FFD700; 
 }
 
-/* 📱 Mobile Adjustment (≤767px) */
+/* Mobile Adjustment (≤767px) */
 @media (max-width: 767px) {
     #status-screen {
         padding: 1rem; 
@@ -889,7 +889,7 @@ body {
     margin-top: 2vh; /* 20px → 2vh (Scales with viewport height) */
 }
 
-/* 📱 Mobile Adjustment (≤767px) */
+/* Mobile Adjustment (≤767px) */
 @media (max-width: 767px) {
     #task-sections {
         flex-direction: column; /* Stack items vertically */
@@ -1860,7 +1860,7 @@ body {
     }
 }
 
-/* 🔹 Responsive for Mobile */
+/* Responsive for Mobile */
 @media (max-width: 768px) {
     #questboss-section {
         max-width: 85vw;
@@ -1960,7 +1960,7 @@ body {
     }
 }
 
-/* 🔹 Responsive for Mobile */
+/* Responsive for Mobile */
 @media (max-width: 768px) {
     #quest-section {
         max-width: 90vw;
@@ -2054,7 +2054,7 @@ body {
 
 
 
-/* 🔹 Dark Overlay for Quest Completion */
+/* Dark Overlay for Quest Completion */
 #lottie-complete-overlay {
     position: fixed;
     top: 0;
@@ -2066,7 +2066,7 @@ body {
     display: none;
 }
 
-/* 🔹 Modal Box for Quest Completion */
+/* Modal Box for Quest Completion */
 #lottie-complete-modal {
     position: fixed;
     top: 50%;
@@ -2086,7 +2086,7 @@ body {
     justify-content: center;
 }
 
-/* 🔹 Lottie Animation Container */
+/* Lottie Animation Container */
 #lottie-complete-animation {
     width: 80%;
     height: 80%;
@@ -2095,7 +2095,7 @@ body {
     justify-content: center;
 }
 
-/* 🔹 Responsive for Small Screens (Mobile) */
+/* Responsive for Small Screens (Mobile) */
 @media (max-width: 768px) {
     #lottie-complete-modal {
         width: 80vw;
@@ -2111,7 +2111,7 @@ body {
     }
 }
 
-/* 🔹 Responsive for Tablets */
+/* Responsive for Tablets */
 @media (max-width: 1024px) {
     #lottie-complete-modal {
         width: 50vw;
@@ -2126,7 +2126,7 @@ body {
     }
 }
 
-/* 🔹 Dark Overlay for Boss Defeat */
+/* Dark Overlay for Boss Defeat */
 #lottie-boss-defeat-overlay {
     position: fixed;
     top: 0;
@@ -2138,7 +2138,7 @@ body {
     display: none;
 }
 
-/* 🔹 Modal Box for Boss Defeat */
+/* Modal Box for Boss Defeat */
 #lottie-boss-defeat-modal {
     position: fixed;
     top: 50%;
@@ -2157,7 +2157,7 @@ body {
     justify-content: center;
 }
 
-/* 🔹 Lottie Animation Container */
+/* Lottie Animation Container */
 #lottie-boss-defeat-animation {
     width: 100%;
     height: 100%;
@@ -2167,10 +2167,14 @@ body {
     background: none !important;
 }
 
-/* 🔹 Show the modal when active */
+/* Show the modal when active */
 #lottie-boss-defeat-overlay.active,
 #lottie-boss-defeat-modal.active {
     display: flex !important;
     opacity: 1;
     visibility: visible;
+}
+
+[data-tab="equipment"] {
+    display: none !important;
 }
