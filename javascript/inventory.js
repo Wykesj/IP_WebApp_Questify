@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const useItemBtn = document.getElementById("use-item-btn");
     const cancelItemBtn = document.getElementById("cancel-item-btn");
 
-
+    window.useItem = useItem;
     let selectedItem = null;
 
     inventoryItems.forEach(item => {

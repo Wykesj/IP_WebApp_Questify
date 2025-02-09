@@ -116,37 +116,42 @@ document.addEventListener("DOMContentLoaded", async function () {
     async function playBossDefeatAnimation() {
         return new Promise((resolve) => {
             console.log("🎉 Playing Boss Defeat Animation...");
-    
+        
             // ✅ Show the modal
             lottieDefeatOverlay.style.display = "block";
             lottieDefeatModal.style.display = "flex";
             lottieDefeatContainer.style.display = "block";
-    
+        
             // ✅ Ensure animation resets before playing
             defeatLottie.goToAndStop(0);
-    
+        
             setTimeout(() => {
                 console.log("▶️ Playing Victory Animation...");
                 defeatLottie.goToAndPlay(0, true);
             }, 100);
-    
+        
             defeatLottie.addEventListener("complete", async () => {
                 console.log("🎬 Boss Defeat Animation Completed.");
-    
-                // ✅ Hide after animation
+        
+                // ✅ Hide modal
                 lottieDefeatOverlay.style.display = "none";
                 lottieDefeatModal.style.display = "none";
     
-                // ✅ Reset Boss HP
+                // ✅ Reset Boss HP in Supabase
                 await resetBossHP();
                 
-                // 🔹 Reset Quest Buttons After Boss Defeat
-                resetQuests(); // ✅ This will reset buttons and text
+                // ✅ Grant 1000 XP before resetting quests
+                await handleBossDefeatRewards();  
+    
+                // ✅ Reset Quest Buttons After Boss Defeat
+                resetQuests(); // This will reset buttons and text
     
                 resolve();
             });
         });
     }
+    
+    
     
 
     // Reset Boss HP in Supabase
@@ -176,6 +181,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error("❌ Error resetting boss HP:", err.message);
         }
     }
+
+    
     
 
     // Handle Quest Completion
@@ -236,6 +243,24 @@ document.addEventListener("DOMContentLoaded", async function () {
             button.style.pointerEvents = "auto";
         });
     }
+
+    async function handleBossDefeatRewards() {
+        try {
+            console.log("🏆 Granting rewards for defeating the boss...");
+    
+            // ✅ Use inventory.js function to add XP & update UI
+            await useItem("xp", 600); // Grants 1000 XP using inventory.js logic
+    
+            console.log("✅ XP granted and UI updated via inventory.js");
+    
+            // ✅ Ensure UI updates correctly after XP is added
+            await fetchPlayerStats();
+    
+        } catch (err) {
+            console.error("❌ Error handling boss defeat rewards:", err.message);
+        }
+    }
+    
 
     // Log Actions in Battle Log
     function logAction(message) {
