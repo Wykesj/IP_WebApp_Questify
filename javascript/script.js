@@ -95,6 +95,59 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         }
         
+
+        function addTaskToDOM(task) {
+            let taskContainer = document.querySelector(`#${task.type}s .task-list`);
+            if (!taskContainer) return;
+        
+            const taskCard = document.createElement("div");
+            taskCard.classList.add("task-card");
+            taskCard.setAttribute("data-task-id", task.id);
+            taskCard.setAttribute("data-category", task.filters || "none");
+            taskCard.setAttribute("data-difficulty", task.difficulty || "easy");
+            taskCard.setAttribute("data-strength", task.strength || "weak");
+        
+            if (task.type === "habit") {
+                taskCard.innerHTML = `
+                    <button class="habit-btn habit-plus"><i class="fa-solid fa-plus"></i></button>
+                    <p>${task.title}</p>
+                    <button class="habit-btn habit-minus"><i class="fa-solid fa-minus"></i></button>
+                `;
+        
+                // Attach event listeners for XP gain/loss
+                setTimeout(() => {
+                    taskCard.querySelector(".habit-plus").addEventListener("click", async () => await handleHabitXPChange(50));
+                    taskCard.querySelector(".habit-minus").addEventListener("click", async () => await handleHabitXPChange(-50));
+                }, 100);
+            } else {
+                taskCard.innerHTML = `
+                    <div class="checkbox-container"></div>
+                    <p>${task.title}</p>
+                `;
+            }
+        
+            taskContainer.appendChild(taskCard);
+            attachTaskEditListener(taskCard);
+        }
+        
+        async function handleHabitXPChange(amount) {
+            try {
+                console.log(`Updating XP for habit action: ${amount > 0 ? "+" : ""}${amount} XP`);
+        
+                // Use inventory.js function to add XP & update UI
+                await useItem("xp", amount); 
+        
+                console.log(`✅ XP updated via inventory.js: ${amount} XP granted`);
+        
+                // Ensure UI updates correctly after XP is added
+                await fetchPlayerStats();
+            } catch (err) {
+                console.error("❌ Error handling habit XP change:", err.message);
+            }
+        }
+        
+        
+
         // Call loadTasks when the page loads
         document.addEventListener("DOMContentLoaded", loadTasks);
         
@@ -198,11 +251,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         function attachTaskEditListener(taskCard) {
             taskCard.addEventListener("click", async function(event) {
                 console.log("🔍 Clicked element:", event.target);
-                
-                // Prevent edit modal for checkbox clicks
-                if (event.target.closest('.checkbox-container') || event.target.closest('.habit-btn')) {
-                    console.log("⚠️ Click ignored - checkbox or habit button");
+        
+                // ✅ Only ignore checkboxes, but allow habit buttons
+                if (event.target.closest('.checkbox-container')) {
+                    console.log("⚠️ Click ignored - checkbox");
                     return;
+                }
+        
+                // ✅ Allow habit buttons to trigger XP changes
+                if (event.target.closest('.habit-btn')) {
+                    console.log("✅ Habit button clicked, processing XP change...");
+        
+                    let amount = event.target.closest(".habit-plus") ? 50 : -50; // Detect if it's + or -
+                    await handleHabitXPChange(amount);
+                    return; // Stop further execution since habit XP is handled
                 }
         
                 const taskId = this.dataset.taskId;
@@ -212,20 +274,21 @@ document.addEventListener("DOMContentLoaded", async function () {
         
                 // Fix dailies type detection
                 let taskType = container.id.replace('dailies', 'daily')
-                                        .replace('habits', 'habit')
-                                        .replace('todos', 'todo');
+                                            .replace('habits', 'habit')
+                                            .replace('todos', 'todo');
         
                 console.log("📌 Task type detected:", taskType);
-                
+        
                 const taskData = await fetchTask(taskId);
                 if (taskData) {
                     console.log("📌 Opening modal for:", taskType, taskData);
-                    
+        
                     // Open the modal in edit mode
                     openEditModal(taskType, taskData);
                 }
             });
-        }    
+        }
+            
 
         async function fetchTask(taskId) {
             try {
