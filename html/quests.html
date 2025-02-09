@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questify - Inventory</title>
+    <title>Questify - Quests</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
@@ -11,9 +11,9 @@
 </head>
 <body>
 
-    <div class="container">  <!-- Main Container -->
+    <div class="container">  
 
-        <!-- Top Bar (Logo + Navigation) -->
+        <!-- Top Bar -->
         <div id="top-bar">
             <div id="logo">
                 <img src="../assets/logo/QuestifyLogoWhiteNoText.svg" alt="Questify Logo">
@@ -22,17 +22,17 @@
             <nav id="navbar">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="inventory.html" class="active">Inventory</a></li>
-                    <li><a href="quests.html">Quests</a></li>
+                    <li><a href="inventory.html">Inventory</a></li>
+                    <li><a href="quests.html" class="active">Quests</a></li>
                 </ul>
             </nav>
         </div>
 
-        <!-- DASHBOARD (SIDEBAR + STATUS SCREEN) -->
+        <!-- DASHBOARD -->
         <main id="dashboard">
             <aside id="sidebar">
                 <div id="streak-indicator">
-                    <p id="streak-text">🔥Streak: <span id="streak-count">3</span> Days</p>
+                    <p id="streak-text">🔥 Streak: <span id="streak-count">3</span> Days</p>
                 </div>
                 <div id="character-picture">
                     <img src="../assets/images/aigenpfp.webp" alt="Character Avatar">
@@ -54,7 +54,7 @@
                     </div>
                     <span id="xp-value">500/1000</span>
                 </div>
-            
+
                 <!-- Stats Bars -->
                 <div class="stats">
                     <div class="stat">
@@ -97,19 +97,19 @@
         <div id="quest-container">
             <main id="boss-dashboard">
                 
-                <!-- QuestBoss Section (Left) -->
+                <!-- Quest Boss Section -->
                 <section id="questboss-section">
-                    <h2>QuestBoss</h2>
+                    <h2>Twilight Dragon</h2>
                     <div id="boss-container">
                         <img id="boss-image" src="../assets/images/dragon1.png" alt="Boss Image">
                         <div id="boss-hp-bar">
                             <div id="boss-hp-filled" style="width: 100%;"></div>
                         </div>
-                        <p id="boss-hp-text">HP: <span id="boss-hp-value">100</span>/100</p>
+                        <p id="boss-hp-text">HP: <span id="boss-hp-value">100</span> / <span id="boss-hp-max">100</span></p>
                     </div>
                 </section>
 
-                <!-- Quest List Section (Right) -->
+                <!-- Quest List Section -->
                 <section id="quest-section">
                     <h2>📜 Quests</h2>
                     <ul id="quest-list">
@@ -130,7 +130,7 @@
                 
             </main>
 
-            <!-- Battle Log (Below) -->
+            <!-- Battle Log -->
             <section id="battle-log">
                 <h2>⚔️ Battle Log</h2>
                 <div id="log-container">
@@ -145,7 +145,13 @@
         <p>&copy; 2025 Questify. All rights reserved.</p>
     </footer>
 
+    <!-- Lottie Animation Modal for Quest Completion -->
+    <div id="lottie-complete-overlay" class="hidden"></div>
+    <div id="lottie-complete-modal" class="hidden">
+        <div id="lottie-complete-animation"></div>
+    </div>
 
+    <!-- Load JavaScript -->
     <script src="../javascript/script.js"></script>
     <script src="../javascript/quests.js"></script>
 </body>

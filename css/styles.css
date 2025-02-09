@@ -384,10 +384,10 @@ body {
 /* ============================= */
 
 .container {
-    width: 90vw; /* 90% of viewport width */
-    max-width: 1600px; /* Keeps desktop max size */
-    margin: 2vh auto; /* Scales margin based on screen height */
-    padding: 1rem; /* Scales padding dynamically */
+    width: 90vw; 
+    max-width: 1600px; 
+    margin: 2vh auto;
+    padding: 1rem; 
 }
 
 /* ============================= */
@@ -400,8 +400,8 @@ body {
     justify-content: space-between;
     background-color: #007BFF;
     color: white;
-    padding: 2vh 3vw; /* Scales padding based on screen size */
-    border-radius: 1rem; /* Scales rounded corners */
+    padding: 2vh 3vw; 
+    border-radius: 1rem; 
 }
 
 /* Logo */
@@ -1844,13 +1844,14 @@ body {
     max-width: 60vw;
     background: #5A40E3;
     color: black;
-    padding: 2rem;
+    padding: 2rem 2rem;
     border-radius: 1rem;
     box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 #quest-section h2 {
     color: white; 
+    margin-bottom: 1.5rem;
 }
 
 #quest-section p {
@@ -1861,6 +1862,10 @@ body {
 #quest-list {
     list-style: none;
     padding: 0;
+}
+
+#quest-list li {
+    margin-bottom: 1.4rem; /* Increases spacing between tasks */
 }
 
 .quest {
@@ -1983,3 +1988,77 @@ body {
         font-size: 0.9rem;
     }
 }
+
+
+/* 🔹 Dark Overlay for Quest Completion */
+#lottie-complete-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none;
+}
+
+/* 🔹 Modal Box for Quest Completion */
+#lottie-complete-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 30vw;
+    height: 30vw;
+    max-width: 400px;
+    max-height: 400px;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 🔹 Lottie Animation Container */
+#lottie-complete-animation {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 🔹 Responsive for Small Screens (Mobile) */
+@media (max-width: 768px) {
+    #lottie-complete-modal {
+        width: 80vw;
+        height: 80vw;
+        max-width: 320px;
+        max-height: 320px;
+        padding: 1.5rem;
+    }
+
+    #lottie-complete-animation {
+        width: 90%;
+        height: 90%;
+    }
+}
+
+/* 🔹 Responsive for Tablets */
+@media (max-width: 1024px) {
+    #lottie-complete-modal {
+        width: 50vw;
+        height: 50vw;
+        max-width: 360px;
+        max-height: 360px;
+    }
+
+    #lottie-complete-animation {
+        width: 85%;
+        height: 85%;
+    }
+}
+
