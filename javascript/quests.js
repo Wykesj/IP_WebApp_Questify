@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", async function () {
-
+    
     // Ensure Supabase is available
     if (typeof supabaseClient === "undefined") {
         console.error("Supabase is not initialized.");
         return;
     }
+
+    let bossDefeated = false;
+    window.defeatLottie = null; // ✅ Now accessible globally in the console
+
+    // ✅ Define window-scoped Lottie elements
+    window.lottieDefeatOverlay = document.getElementById("lottie-boss-defeat-overlay");
+    window.lottieDefeatModal = document.getElementById("lottie-boss-defeat-modal");
+    window.lottieDefeatContainer = document.getElementById("lottie-boss-defeat-animation");
 
     // HTML Elements
     const bossHpText = document.getElementById("boss-hp-value");
@@ -13,19 +21,29 @@ document.addEventListener("DOMContentLoaded", async function () {
     const questButtons = document.querySelectorAll(".complete-btn");
     const logContainer = document.getElementById("log-container");
 
-    // Lottie Modal Elements
-    const lottieOverlay = document.getElementById("lottie-complete-overlay");
-    const lottieModal = document.getElementById("lottie-complete-modal");
-    const lottieContainer = document.getElementById("lottie-complete-animation");
+    // Lottie Modal Elements (Completion & Boss Defeat)
+    const lottieCompleteOverlay = document.getElementById("lottie-complete-overlay");
+    const lottieCompleteModal = document.getElementById("lottie-complete-modal");
+    const lottieCompleteContainer = document.getElementById("lottie-complete-animation");
 
-    // Initialize Lottie Animation
+    // Initialize Lottie Animations
     let completeLottie = lottie.loadAnimation({
-        container: lottieContainer,
+        container: lottieCompleteContainer,
         renderer: "svg",
         loop: false,
         autoplay: false,
         path: "../assets/lotties/complete.json"
     });
+
+    window.defeatLottie = lottie.loadAnimation({
+        container: lottieDefeatContainer,
+        renderer: "svg",
+        loop: false,
+        autoplay: false,
+        path: "../assets/lotties/victory.json"
+    });
+
+    console.log("✅ Defeat Lottie Initialized:", window.defeatLottie);
 
     // Fetch Boss HP on Load
     async function fetchBossHP() {
@@ -41,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             console.log("Boss HP Data:", data);
             updateBossUI(data.hp, data.max_hp);
-            listenForBossHPChanges(); // Enable real-time updates
+            listenForBossHPChanges();
         } catch (err) {
             console.error("Error in fetchBossHP:", err.message);
         }
@@ -52,45 +70,117 @@ document.addEventListener("DOMContentLoaded", async function () {
         supabaseClient
             .channel("realtime:boss_status")
             .on("postgres_changes", { event: "UPDATE", schema: "public", table: "boss_status" }, (payload) => {
-                console.log("Realtime Update:", payload);
-                updateBossUI(payload.new.hp, payload.new.max_hp);
+                console.log("🔄 Realtime Update:", payload);
+                if (payload.new) {
+                    updateBossUI(payload.new.hp, payload.new.max_hp);
+                }
             })
             .subscribe();
     }
 
     // Update UI for Boss HP
     function updateBossUI(hp, maxHp) {
-        if (hp < 0) hp = 0; // Ensure it doesn’t go below zero
+        if (hp < 0) hp = 0;
         bossHpText.textContent = hp;
         bossHpMaxText.textContent = maxHp;
         bossHpBar.style.width = `${(hp / maxHp) * 100}%`;
+
+        console.log(`Updated Boss HP: ${hp}/${maxHp}`);
+
+        if (hp === 0 && !bossDefeated) {
+            bossDefeated = true;
+            playBossDefeatAnimation();
+        } else if (hp > 0) {
+            bossDefeated = false;
+        }
     }
 
-    // Play Lottie Animation (with modal)
+    // Play Lottie Quest Completion Animation
     function playLottieComplete() {
         return new Promise((resolve) => {
-            lottieOverlay.style.display = "block";
-            lottieModal.style.display = "flex";
+            lottieCompleteOverlay.style.display = "block";
+            lottieCompleteModal.style.display = "flex";
 
             completeLottie.goToAndPlay(0, true);
 
             completeLottie.addEventListener("complete", () => {
-                lottieOverlay.style.display = "none";
-                lottieModal.style.display = "none";
+                lottieCompleteOverlay.style.display = "none";
+                lottieCompleteModal.style.display = "none";
                 resolve();
             });
         });
     }
 
-    // Handle Quest Completion (Fixing .from Error)
+    // Play Lottie Boss Defeat Animation
+    function playBossDefeatAnimation() {
+        return new Promise((resolve) => {
+            console.log("🎉 Playing Boss Defeat Animation...");
+    
+            // ✅ Show the modal
+            lottieDefeatOverlay.style.display = "block";
+            lottieDefeatModal.style.display = "flex";
+            lottieDefeatContainer.style.display = "block";
+    
+            // ✅ Ensure animation resets before playing
+            defeatLottie.goToAndStop(0);
+    
+            setTimeout(() => {
+                console.log("▶️ Playing Victory Animation...");
+                defeatLottie.goToAndPlay(0, true);
+            }, 100);
+    
+            defeatLottie.addEventListener("complete", async () => {
+                console.log("🎬 Boss Defeat Animation Completed.");
+    
+                // ✅ Hide after animation
+                lottieDefeatOverlay.style.display = "none";
+                lottieDefeatModal.style.display = "none";
+    
+                // ✅ Reset Boss HP
+                await resetBossHP();
+    
+                resolve();
+            });
+        });
+    }
+    
+
+    // Reset Boss HP in Supabase
+    async function resetBossHP() {
+        try {
+            const { data, error } = await supabaseClient
+                .from("boss_status")
+                .select("id")
+                .limit(1)
+                .single();
+    
+            if (error) throw error;
+    
+            const bossId = data.id;
+    
+            const { error: updateError } = await supabaseClient
+                .from("boss_status")
+                .update({ hp: 100 })
+                .eq("id", bossId);
+    
+            if (updateError) throw updateError;
+    
+            console.log("✅ Boss HP reset to 100.");
+            bossDefeated = false; // 🔹 Reset boss defeated state here
+            fetchBossHP();
+        } catch (err) {
+            console.error("❌ Error resetting boss HP:", err.message);
+        }
+    }
+    
+
+    // Handle Quest Completion
     questButtons.forEach((button) => {
         button.addEventListener("click", async function () {
             const damage = parseInt(button.getAttribute("data-damage"));
 
-            // Play animation first
             await playLottieComplete();
 
-            // Fetch Current HP
             const { data, error } = await supabaseClient
                 .from("boss_status")
                 .select("id, hp, max_hp")
@@ -104,7 +194,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             let newHp = Math.max(0, data.hp - damage);
 
-            // Update Supabase (Fix .from Error)
             const { error: updateError } = await supabaseClient
                 .from("boss_status")
                 .update({ hp: newHp })
@@ -115,15 +204,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 return;
             }
 
-            // Manually fetch HP again (ensures real-time update works)
-            await fetchBossHP();
-
-            // Log Action
+            updateBossUI(newHp, data.max_hp);
             logAction(`You dealt ${damage} damage to Twilight Dragon.`);
-
-            if (newHp === 0) {
-                logAction("Boss defeated. Prepare for the next challenge.");
-            }
+            await fetchBossHP();
         });
     });
 
@@ -135,7 +218,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         logContainer.appendChild(logEntry);
     }
 
-    // Fetch Initial Boss HP
     fetchBossHP();
     fetchPlayerStats();
 });
