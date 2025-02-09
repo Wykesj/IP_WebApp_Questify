@@ -93,8 +93,51 @@
             
         </main> 
 
-        <!-- Quests Section -->
+        <!-- QUESTS PAGE -->
+        <div id="quest-container">
+            <main id="boss-dashboard">
+                
+                <!-- QuestBoss Section (Left) -->
+                <section id="questboss-section">
+                    <h2>QuestBoss</h2>
+                    <div id="boss-container">
+                        <img id="boss-image" src="../assets/images/dragon1.png" alt="Boss Image">
+                        <div id="boss-hp-bar">
+                            <div id="boss-hp-filled" style="width: 100%;"></div>
+                        </div>
+                        <p id="boss-hp-text">HP: <span id="boss-hp-value">100</span>/100</p>
+                    </div>
+                </section>
 
+                <!-- Quest List Section (Right) -->
+                <section id="quest-section">
+                    <h2>📜 Quests</h2>
+                    <ul id="quest-list">
+                        <li class="quest">
+                            <p>✅ Do 10 Push-ups</p>
+                            <button class="complete-btn" data-damage="20">Complete (- 20 HP)</button>
+                        </li>
+                        <li class="quest">
+                            <p>✅ Drink Water</p>
+                            <button class="complete-btn" data-damage="30">Complete (- 30 HP)</button>
+                        </li>
+                        <li class="quest">
+                            <p>✅ Walk 10,000 Steps</p>
+                            <button class="complete-btn" data-damage="50">Complete (- 50 HP)</button>
+                        </li>
+                    </ul>
+                </section>
+                
+            </main>
+
+            <!-- Battle Log (Below) -->
+            <section id="battle-log">
+                <h2>⚔️ Battle Log</h2>
+                <div id="log-container">
+                    <p class="battle-entry" id="default-log">No actions yet...</p>
+                </div>
+            </section>
+        </div>
     </div> 
 
     <!-- Footer -->
@@ -104,6 +147,6 @@
 
 
     <script src="../javascript/script.js"></script>
-    <script src="../javascript/inventory.js"></script>
+    <script src="../javascript/quests.js"></script>
 </body>
 </html>
