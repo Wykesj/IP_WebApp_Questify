@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         renderer: "svg",
         loop: false,
         autoplay: false,
-        path: "../assets/lotties/complete.json"
+        path: "https://wykesj.github.io/IP_WebApp_Questify/assets/lotties/complete.json"
     });
 
     window.defeatLottie = lottie.loadAnimation({
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         renderer: "svg",
         loop: false,
         autoplay: false,
-        path: "../assets/lotties/victory.json"
+        path: "https://wykesj.github.io/IP_WebApp_Questify/assets/lotties/victory.json"
     });
 
     console.log("Defeat Lottie Initialized:", window.defeatLottie);

@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         renderer: "svg",
                         loop: false,
                         autoplay: false,
-                        path: "../assets/lotties/Checkbox.json"
+                        path: "https://wykesj.github.io/IP_WebApp_Questify/assets/lotties/Checkbox.json"
                     });
         
                     // Apply the same resizing logic used in initial script
@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 renderer: "svg",
                 loop: false,
                 autoplay: false,
-                path: "../assets/lotties/Checkbox.json",
+                path: "https://wykesj.github.io/IP_WebApp_Questify/assets/lotties/Checkbox.json",
                 rendererSettings: { scaleMode: 'noScale' }
             });
 
@@ -787,7 +787,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 renderer: "svg",
                 loop: false,
                 autoplay: true,
-                path: "../assets/lotties/success.json",
+                path: "https://wykesj.github.io/IP_WebApp_Questify/assets/lotties/success.json",
                 rendererSettings: {
                     preserveAspectRatio: "xMidYMid meet"
                 }

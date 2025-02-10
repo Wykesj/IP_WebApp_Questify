@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         renderer: "svg",
         loop: false, 
         autoplay: false, 
-        path: "../assets/lotties/use.json" 
+        path: "https://wykesj.github.io/IP_WebApp_Questify/assets/lotties/use.json" 
     });
     
     function playItemAnimation() {
