@@ -87,7 +87,7 @@ AI tools were used to assist in various aspects of **Questify’s** development,
 - AI was used to refine the **`useItem()` function**, ensuring multiple stats could be updated simultaneously when an inventory item was used.
 - It also helped implement **API integration with Supabase** to fetch and update player stats dynamically.  
 📌 **Example: AI-generated code snippet for updating multiple stats when using an item.**  
-![Item Usage AI Example](assets\images\AI1.png)
+![Item Usage AI Example](assets/images/AI1.png)
 
 ---
 
@@ -95,7 +95,7 @@ AI tools were used to assist in various aspects of **Questify’s** development,
 - AI assisted in optimizing **task filtering logic**, allowing users to filter tasks by **category selection** and dynamically update the UI.  
 - AI also helped simplify the **reset filters button**, ensuring proper state reset without unnecessary DOM manipulations.  
 📌 **Example: AI-assisted filter logic for task categories.**  
-![Task Filtering AI Example](assets\images\AI2.png)
+![Task Filtering AI Example](assets/images/AI2.png)
 
 ---
 
@@ -103,21 +103,21 @@ AI tools were used to assist in various aspects of **Questify’s** development,
 - AI was used to integrate and optimize **Lottie animations for checkboxes**, ensuring they correctly played when marking a daily task as complete.  
 - AI also assisted in adjusting **animation scaling and event listeners** to maintain consistency.  
 📌 **Example: AI-generated Lottie animation logic for task completion.**  
-![Lottie Animation AI Example](assets\images\AI3.png)
+![Lottie Animation AI Example](assets/images/AI3.png)
 
 ---
 
 ### **4. Modal Management for Task Creation**
 - AI was used to streamline the **modal setup** process, allowing a **single reusable function** to manage multiple modal types (habits, dailies, and to-dos).  
 📌 **Example: AI-generated modal setup function.**  
-![Modal Management AI Example](assets\images\AI4.png)
+![Modal Management AI Example](assets/images/AI4.png)
 
 ---
 
 ### **5. Task Submission and API Integration**
 - AI assisted in implementing a **task creation system** that stores tasks in Supabase, ensuring proper validation and error handling.  
 📌 **Example: AI-assisted task submission logic.**  
-![Task Submission AI Example](assets\images\AI5.png)
+![Task Submission AI Example](assets/images/AI5.png)
 
 ---
 
